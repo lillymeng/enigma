@@ -1,5 +1,6 @@
 html {
   height: 100%;
+  background: linear-gradient(to right bottom, #7febf9, #ffdd32);
 }
 
 .active {
