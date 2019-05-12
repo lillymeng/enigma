@@ -1,0 +1,122 @@
+html {
+  height: 100%;
+}
+
+.active {
+  color: #ff8f00;
+}
+
+.white {
+  color: white;
+}
+
+.font-montserrat {
+  font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.nav-link {
+  font-size: 1.75rem;
+  font-family: 'Germania One', cursive;
+}
+
+h1 {
+  color: #064f09;
+  text-align: center;
+  font-family: 'Montserrat Alternates', sans-serif;
+}
+
+p {
+  color: black;
+  font-size: 18px;
+  font-family: 'Montserrat Alternates', sans-serif;
+}
+
+a {
+  color: #442404;
+  font-family: 'Montserrat Alternates', sans-serif;
+}
+
+a:hover{
+  color: grey;
+  text-decoration: none;
+}
+
+.active a{
+    color: #ff8f00 !important;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto; 
+}
+
+.btn {
+  /*background-color: #3FA39B;*/
+  background-color: #68B92D;
+  /*background-color: #5AB55D;*/
+  /*background-color: #2179A5;*/
+  /*background-color: #086A9C;*/
+  border-color: #68B92D;
+  font-family: 'Montserrat Alternates', sans-serif;
+}
+.btn:hover {
+  background-color: #3FA39B;
+  /*background-color: #68B92D;*/
+  /*background-color: #5AB55D;*/
+  /*background-color: #2179A5;*/
+  /*background-color: #086A9C;*/
+  border-color: #3FA39B;
+}
+
+body {
+  background: linear-gradient(to right bottom, #7febf9, #ffdd32);
+}
+
+
+.buttons {
+    margin: 10%;
+    text-align: center;
+}
+.btn-hover {
+    width: 200px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    margin: 20px;
+    height: 55px;
+    text-align:center;
+    border: none;
+    background-size: 300% 100%;
+
+    border-radius: 50px;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+.btn-hover:hover {
+    background-position: 100% 0;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+.btn-hover:focus {
+    outline: none;
+}
+.btn-hover.dark {
+    background-image: linear-gradient(to right, #065882, #485563, #2b5876, #4e4376);
+    box-shadow: 0 2px 2px 0 rgba(45, 54, 65, 0.75);
+}
+

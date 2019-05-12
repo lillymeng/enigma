@@ -1,0 +1,25 @@
+/* reference https://codemyui.com/gradient-buttons-with-glint-on-hover/ */
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+header {
+  animation: 1s ease-out 0s 1 slideInFromLeft;
+  
+  background: #333333;
+  padding: 30px;
+
+  border-bottom: 1px solid grey;
+}
+
+header a {
+  text-decoration: none;
+  display: inline-block;
+  margin-right: 10px;
+  color: white;
+}
