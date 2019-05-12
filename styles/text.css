@@ -21,7 +21,7 @@ p {
 }
 
 a {
-  color: #442404;
+  color: #064f09;
   font-family: 'Montserrat Alternates', sans-serif;
 }
 
@@ -32,6 +32,9 @@ a:hover{
 
 button {
   font-family: 'Montserrat Alternates', sans-serif;
+}
+button:hover {
+  transform: scale(1.05);
 }
 
 .active a{
