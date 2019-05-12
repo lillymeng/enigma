@@ -556,7 +556,8 @@ function gravityCheck()
 	}
 }
 
-var posIncrement = 7.5;
+var posIncrement = 11.25;
+var EPS2 = .05;
 
 function updatePosition()
 {
@@ -564,19 +565,19 @@ function updatePosition()
 
 	if (orientation == 0)
 	{
-		if (block1.position.y - EPS > block1Pos[1])
+		if (block1.position.y - EPS2 > block1Pos[1])
 		{
 			block1.position.set(block1.position.x, block1.position.y - posIncrement, zPos);
 			updating = true;
 		}
 
-		if (block2.position.y - EPS > block2Pos[1])
+		if (block2.position.y - EPS2 > block2Pos[1])
 		{
 			block2.position.set(block2.position.x, block2.position.y - posIncrement, zPos);
 			updating = true;
 		}
 
-		if (block3.position.y - EPS > block3Pos[1])
+		if (block3.position.y - EPS2 > block3Pos[1])
 		{
 			block3.position.set(block3.position.x, block3.position.y - posIncrement, zPos);
 			updating = true;
@@ -585,19 +586,19 @@ function updatePosition()
 
 	else if (orientation == 1)
 	{
-		if (block1.position.x - EPS > block1Pos[0])
+		if (block1.position.x - EPS2 > block1Pos[0])
 		{
 			block1.position.set(block1.position.x - posIncrement, block1.position.y, zPos);
 			updating = true;
 		}
 
-		if (block2.position.x - EPS > block2Pos[0])
+		if (block2.position.x - EPS2 > block2Pos[0])
 		{
 			block2.position.set(block2.position.x - posIncrement, block2.position.y, zPos);
 			updating = true;
 		}
 
-		if (block3.position.x - EPS > block3Pos[0])
+		if (block3.position.x - EPS2 > block3Pos[0])
 		{
 			block3.position.set(block3.position.x - posIncrement, block3.position.y, zPos);
 			updating = true;
@@ -606,19 +607,19 @@ function updatePosition()
 
 	else if (orientation == 2)
 	{
-		if (block1.position.y + EPS < block1Pos[1])
+		if (block1.position.y + EPS2 < block1Pos[1])
 		{
 			block1.position.set(block1.position.x, block1.position.y + posIncrement, zPos);
 			updating = true;
 		}
 
-		if (block2.position.y + EPS < block2Pos[1])
+		if (block2.position.y + EPS2 < block2Pos[1])
 		{
 			block2.position.set(block2.position.x, block2.position.y + posIncrement, zPos);
 			updating = true;
 		}
 
-		if (block3.position.y + EPS < block3Pos[1])
+		if (block3.position.y + EPS2 < block3Pos[1])
 		{
 			block3.position.set(block3.position.x, block3.position.y + posIncrement, zPos);
 			updating = true;
@@ -627,19 +628,19 @@ function updatePosition()
 
 	else if (orientation == 3)
 	{
-		if (block1.position.x + EPS < block1Pos[0])
+		if (block1.position.x + EPS2 < block1Pos[0])
 		{
 			block1.position.set(block1.position.x + posIncrement, block1.position.y, zPos);
 			updating = true;
 		}
 
-		if (block2.position.x + EPS < block2Pos[0])
+		if (block2.position.x + EPS2 < block2Pos[0])
 		{
 			block2.position.set(block2.position.x + posIncrement, block2.position.y, zPos);
 			updating = true;
 		}
 
-		if (block3.position.x + EPS < block3Pos[0])
+		if (block3.position.x + EPS2 < block3Pos[0])
 		{
 			block3.position.set(block3.position.x + posIncrement, block3.position.y, zPos);
 			updating = true;
@@ -668,6 +669,13 @@ function checkGoal()
 renderer.render(scene, camera);
 requestAnimationFrame(render);
 
+function crazyRotate()
+{
+	camera.up.set(Math.cos(angle), Math.sin(angle), 0);
+	camera.lookAt(0, 0, 0);
+	angle -= angleIncr;
+}
+
 function render() 
 {
 	var rendering = false;
@@ -694,5 +702,14 @@ function render()
 	{
 	    renderer.render(scene, camera);
 	    requestAnimationFrame(render);
+	}
+
+	// check if the blocks are at the goal
+	else
+	{
+		if (checkGoal())
+        {
+        	document.getElementById("instructions").innerHTML = "Congrats! Your puzzle solving skills are a-maze-ing!";
+        }
 	}
 }

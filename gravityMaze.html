@@ -28,14 +28,7 @@
             rotateCounter = true;
             angleFinal -= rotation;
             orientation = (orientation + 1) % 4;
-            console.log(orientation);
             requestAnimationFrame(render);
-
-            // check if the blocks are at the goal
-            if (checkGoal())
-            {
-                document.getElementById("messageLoc").innerHTML = "Congrats! Your navigation skills are a-maze-ing.";
-            }
         }
     }
 
@@ -52,14 +45,7 @@
             {
                 orientation = 3;
             }
-            console.log(orientation);
             requestAnimationFrame(render);
-
-            // check if the blocks are at the goal
-            if (checkGoal())
-            {
-                document.getElementById("messageLoc").innerHTML = "Congrats! Your navigation skills are a-maze-ing.";
-            }
         }
     }
     </script>
@@ -72,7 +58,7 @@
 
     <div class="canvas-container">
         <div class="row justify-content-center pt-4" style="position: absolute; width: 100%">
-            <h3 class="pb-3">Rotate to move the boxes to their finishing points of the same color</h3>
+            <h3 id="instructions" class="pb-3">Rotate to move the boxes to their finishing points of the same color</h3>
         </div>
         <canvas id="myCanvas"></canvas>
         <button class="btn-lg" id="rotateCounterClockwise" onclick="rotateCounterClock()"><i class="fas fa-angle-left"></i></button>
