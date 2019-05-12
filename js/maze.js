@@ -98,6 +98,19 @@ function getRightIndexFromUp(upIndex)
 	return rightIndex;
 }
 
+// get the indices for the downward orientation from the upward (default) orientation
+function getDownIndexFromUp(upIndex)
+{
+	var downIndex = [dimX - upIndex[0] - 1, dimY - upIndex[1] - 1]
+	return downIndex;
+}
+
+function getLeftIndexFromUp(upIndex)
+{
+	var leftIndex = [upIndex[1], dimX - upIndex[0] - 1]
+	return leftIndex;
+}
+
 // get the indices for upward (default) orientation from right orientation
 function getUpIndexFromRight(rightIndex)
 {
@@ -215,7 +228,7 @@ var block1Index = [3, 0]; // indices of the circle/red block
 var block2Index = [3, 1]; // indices of the x/blue block
 var block3Index = [3, 2]; // indices of the square/yellow block
 
-var block1Pos = getPixelPosition(block1Index);// pixel position of the circle/red block
+var block1Pos = getPixelPosition(block1Index); // pixel position of the circle/red block
 var block2Pos = getPixelPosition(block2Index); // pixel position of the x/blue block
 var block3Pos = getPixelPosition(block3Index); // pixel position of the square/yellow block
 
@@ -271,22 +284,22 @@ function getBlocks()
 
 	if (pos1 <= pos2 && pos2 <= pos3)
 	{
-		return [block1, block2, block3];
+		return [1, 2, 3];
 	}
 
 	else if (pos1 <= pos3 && pos3 <= pos2)
 	{
-		return [block1, block3, block2];
+		return [1, 3, 2];
 	}
 
 	else if (pos3 <= pos1 && pos1 <= pos2)
 	{
-		return [block3, block1, block2];
+		return [3, 1, 2];
 	}
 
 	else
 	{
-		return [block3, block2, block1];
+		return [3, 2, 1];
 	}
 }
 
@@ -301,12 +314,14 @@ function getBlocks()
 // variables for camera rotation
 var angle = Math.PI / 2;
 var angleFinal = 0;
+const angleIncr = .02;
 
 const rotation = Math.PI;
 
 var rotateCounter = true;
 var rotateClock = false;
-var inMotion = true;
+var applyGrav = false;
+var inMotion = false;
 orientation = 1;
 
 // camera rotation
@@ -314,12 +329,12 @@ function rotateCameraCounterClock()
 {
 	camera.up.set(Math.cos(angle), Math.sin(angle), 0);
 	camera.lookAt(0, 0, 0);
-	angle -= .01;
+	angle -= angleIncr;
 
 	if (angle < angleFinal)
 	{
 		rotateCounter = false;
-		inMotion = true;
+		applyGrav = true;
 	}
 }
 
@@ -328,18 +343,287 @@ function rotateCameraClock()
 {
 	camera.up.set(Math.cos(angle), Math.sin(angle), 0);
 	camera.lookAt(0, 0, 0);
-	angle += .01;
+	angle += angleIncr;
 
 	if (angle > angleFinal)
 	{
 		rotateClock = false;
-		inMotion = true;
+		applyGrav = true;
 	}
 }
 
-console.log("Hi");
-console.log(getBlocks());
+function checkCollision(blockNum)
+{
+	var myBlock;
+	var bOther1;
+	var bOther2;
 
+	// get the blocks to compare
+	if (blockNum == 1)
+	{
+		myBlock = block1Index;
+		bOther1 = block2Index;
+		bOther2 = block3Index;
+	}
+
+	else if (blockNum == 2)
+	{
+		myBlock = block2Index;
+		bOther1 = block1Index;
+		bOther2 = block3Index;
+	}
+
+	else if (blockNum == 3)
+	{
+		myBlock = block3Index;
+		bOther1 = block2Index;
+		bOther2 = block1Index;
+	}
+
+	// check the collision for the current orientation
+	if (orientation == 0)
+	{
+		if (wallsUp[myBlock[0]][myBlock[1]])
+		{
+			return true;
+		}
+
+		if ((myBlock[1] - 1) == bOther1[1] && myBlock[0] == bOther1[0])
+		{
+			return true;
+		}
+
+		if ((myBlock[1] - 1) == bOther2[1] && myBlock[0] == bOther2[0])
+		{
+			return true;
+		}
+	}
+	if (orientation == 1)
+	{
+		var myIndex = getRightIndexFromUp(myBlock);
+		if (wallsRight[myIndex[0]][myIndex[1]])
+		{
+			return true;
+		}
+
+		if ((myBlock[0] - 1) == bOther1[0] && myBlock[1] == bOther1[1])
+		{
+			return true;
+		}
+
+		if ((myBlock[0] - 1) == bOther2[0] && myBlock[1] == bOther2[1])
+		{
+			return true;
+		}
+	}
+	if (orientation == 2)
+	{
+		var myIndex = getDownIndexFromUp(myBlock);
+		if (wallsRight[myIndex[0]][myIndex[1]])
+		{
+			return true;
+		}
+
+		if ((myBlock[1] + 1) == bOther1[1] && myBlock[0] == bOther1[0])
+		{
+			return true;
+		}
+
+		if ((myBlock[1] + 1) == bOther2[1] && myBlock[0] == bOther2[0])
+		{
+			return true;
+		}
+	}
+	if (orientation == 3)
+	{
+		var myIndex = getLeftIndexFromUp(myBlock);
+		if (wallsRight[myIndex[0]][myIndex[1]])
+		{
+			return true;
+		}
+
+		if ((myBlock[0] + 1) == bOther1[0] && myBlock[1] == bOther1[1])
+		{
+			return true;
+		}
+
+		if ((myBlock[0] + 1) == bOther2[0] && myBlock[1] == bOther2[1])
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+// update indices for all blocks
+function moveDown(blockNum)
+{
+	var index;
+
+	if (blockNum == 1)
+	{
+		index = block1Index;
+	}
+
+	else if (blockNum == 2)
+	{
+		index = block2Index;
+	}
+
+	else if (blockNum == 3)
+	{
+		index = block3Index;
+	}
+
+	// move block down for current orientation
+
+	if (orientation == 0)
+	{
+		index[1]--;
+	}
+
+	else if (orientation == 1)
+	{
+		index[0]--;
+	}
+
+	else if (orientation == 2)
+	{
+		index[1]++;
+	}
+
+	else if (orientation == 3)
+	{
+		index[0]++;
+	}
+}
+
+function gravityCheck()
+{
+	if (inMotion)
+	{
+		updatePosition();
+	}
+
+	else
+	{
+		var blocks = getBlocks();
+
+		// move block indices down if no collisions
+		for (var i = 0; i < blocks.length; i++)
+		{
+			if (!checkCollision(blocks[i]))
+			{
+				moveDown(blocks[i]);
+				inMotion = true;
+			}
+		}
+
+		// update block positions
+		block1Pos = getPixelPosition(block1Index);
+		block2Pos = getPixelPosition(block2Index); 
+		block3Pos = getPixelPosition(block3Index); 
+	}
+}
+
+var posIncrement = 1;
+
+function updatePosition()
+{
+	var updating = false;
+
+	if (orientation == 0)
+	{
+		if (block1.position.y > block1Pos[0])
+		{
+			block1.position.set(block1.position.x, block1.position.y - posIncrement, zPos);
+			updating = true;
+		}
+
+		if (block2.position.y > block2Pos[0])
+		{
+			block2.position.set(block2.position.x, block2.position.y - posIncrement, zPos);
+			updating = true;
+		}
+
+		if (block3.position.y > block3Pos[0])
+		{
+			block3.position.set(block3.position.x, block3.position.y - posIncrement, zPos);
+			updating = true;
+		}
+	}
+
+	else if (orientation == 1)
+	{
+		if (block1.position.x > block1Pos[0])
+		{
+			block1.position.set(block1.position.x - posIncrement, block1.position.y, zPos);
+			updating = true;
+		}
+
+		if (block2.position.x > block2Pos[0])
+		{
+			block2.position.set(block2.position.x - posIncrement, block2.position.y, zPos);
+			updating = true;
+		}
+
+		if (block3.position.x > block3Pos[0])
+		{
+			block3.position.set(block3.position.x - posIncrement, block3.position.y, zPos);
+			updating = true;
+		}
+	}
+
+	else if (orientation == 2)
+	{
+		if (block1.position.y < block1Pos[0])
+		{
+			block1.position.set(block1.position.x, block1.position.y + posIncrement, zPos);
+			updating = true;
+		}
+
+		if (block2.position.y < block2Pos[0])
+		{
+			block2.position.set(block2.position.x, block2.position.y + posIncrement, zPos);
+			updating = true;
+		}
+
+		if (block3.position.y < block3Pos[0])
+		{
+			block3.position.set(block3.position.x, block3.position.y + posIncrement, zPos);
+			updating = true;
+		}
+	}
+
+	else if (orientation == 3)
+	{
+		if (block1.position.x < block1Pos[0])
+		{
+			block1.position.set(block1.position.x + posIncrement, block1.position.y, zPos);
+			updating = true;
+		}
+
+		if (block2.position.x < block2Pos[0])
+		{
+			block2.position.set(block2.position.x + posIncrement, block2.position.y, zPos);
+			updating = true;
+		}
+
+		if (block3.position.x < block3Pos[0])
+		{
+			block3.position.set(block3.position.x + posIncrement, block3.position.y, zPos);
+			updating = true;
+		}
+	}
+
+
+
+	if (updating == false)
+	{
+		inMotion = false;
+	}
+}
 
 //RENDER LOOP
 requestAnimationFrame(render);
@@ -356,9 +640,9 @@ function render()
 
 	}
 	
-	if (inMotion)
+	if (applyGrav)
 	{
-
+		gravityCheck();
 	}
     renderer.render(scene, camera);
     requestAnimationFrame(render);
