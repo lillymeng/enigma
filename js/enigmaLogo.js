@@ -20,7 +20,7 @@ scene.add(light1);
 
 //LOGO CUBE
 var geometry = new THREE.CubeGeometry(330, 330, 330);
-var material = new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('logo.png')});
+var material = new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('images/logo.png')});
 var logoCube = new THREE.Mesh(geometry, material);
 logoCube.position.set(0, 0, -1000);
 scene.add(logoCube);
