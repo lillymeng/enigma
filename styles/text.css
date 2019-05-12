@@ -30,6 +30,10 @@ a:hover{
   text-decoration: none;
 }
 
+button {
+  font-family: 'Montserrat Alternates', sans-serif;
+}
+
 .active a{
     color: #ff8f00 !important;
 }

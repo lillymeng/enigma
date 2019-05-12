@@ -9,6 +9,10 @@
 }
 
 header {
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  
   animation: 1s ease-out 0s 1 slideInFromLeft;
   
   background: #333333;
