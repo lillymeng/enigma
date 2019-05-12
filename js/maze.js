@@ -176,9 +176,6 @@ for (var i = 0; i < dimX; i++)
 {
 	for (var j = 0; j < dimY; j++)
 	{
-		console.log(i);
-		console.log(j);
-		console.log(wallsUp[i][j])
 		if (wallsUp[i][j])
 		{
 			var myWall = new THREE.Mesh(wallGeomSide, material2);
@@ -239,6 +236,61 @@ block3.position.set(block3Pos[0], block3Pos[1], zPos);
 scene.add(block3);
 
 
+function getBlocks()
+{
+	var pos1 = 0;
+	var pos2 = 0;
+	var pos3 = 0;
+	if (orientation == 0)
+	{
+		pos1 = block1Index[1];
+		pos2 = block2Index[1];
+		pos3 = block3Index[1];
+	}
+
+	if (orientation == 1)
+	{
+		pos1 = block1Index[0];
+		pos2 = block2Index[0];
+		pos3 = block3Index[0];
+	}
+
+	if (orientation == 2)
+	{
+		pos1 = block1Index[1] * -1;
+		pos2 = block2Index[1] * -1;
+		pos3 = block3Index[1] * -1;
+	}
+
+	if (orientation == 4)
+	{
+		pos1 = block1Index[0] * -1;
+		pos2 = block2Index[0] * -1;
+		pos3 = block3Index[0] * -1;
+	}
+
+	if (pos1 <= pos2 && pos2 <= pos3)
+	{
+		return [block1, block2, block3];
+	}
+
+	else if (pos1 <= pos3 && pos3 <= pos2)
+	{
+		return [block1, block3, block2];
+	}
+
+	else if (pos3 <= pos1 && pos1 <= pos2)
+	{
+		return [block3, block1, block2];
+	}
+
+	else
+	{
+		return [block3, block2, block1];
+	}
+}
+
+
 
 // use this to change the up direction for the camera
 // camera.up.set(1, 1, 0);
@@ -254,6 +306,8 @@ const rotation = Math.PI;
 
 var rotateCounter = true;
 var rotateClock = false;
+var inMotion = true;
+orientation = 1;
 
 // camera rotation
 function rotateCameraCounterClock()
@@ -265,6 +319,7 @@ function rotateCameraCounterClock()
 	if (angle < angleFinal)
 	{
 		rotateCounter = false;
+		inMotion = true;
 	}
 }
 
@@ -278,8 +333,12 @@ function rotateCameraClock()
 	if (angle > angleFinal)
 	{
 		rotateClock = false;
+		inMotion = true;
 	}
 }
+
+console.log("Hi");
+console.log(getBlocks());
 
 
 //RENDER LOOP
@@ -291,7 +350,13 @@ function render()
 	{
     	rotateCameraCounterClock();
 	}
-	else if (rotateClock)
+
+	if (rotateClock)
+	{
+
+	}
+	
+	if (inMotion)
 	{
 
 	}
