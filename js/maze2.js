@@ -130,40 +130,35 @@ var wallsUp = createWalls();
 var wallsRight = createWalls();
 
 // set walls for orientation 0
-wallsUp[1][1] = true;
-wallsUp[1][2] = true;
-wallsUp[1][6] = true;
-wallsUp[2][4] = true;
-wallsUp[2][6] = true;
-wallsUp[3][2] = true;
-wallsUp[3][5] = true;
+wallsUp[0][1] = true;
+wallsUp[3][1] = true;
 wallsUp[4][1] = true;
-wallsUp[4][2] = true;
+wallsUp[5][1] = true;
+wallsUp[3][2] = true;
+wallsUp[1][3] = true;
 wallsUp[5][3] = true;
-wallsUp[5][6] = true;
-wallsUp[6][5] = true;
+wallsUp[2][4] = true;
+wallsUp[6][4] = true;
+wallsUp[0][5] = true;
+wallsUp[3][5]= true;
+wallsUp[0][6] = true;
+wallsUp[1][6] = true;
 wallsUp[6][6] = true;
 
 // set wall for orientation 1
-wallsRight[0][4] = true;
-wallsRight[1][1] = true;
-wallsRight[1][2] = true;
-wallsRight[1][4] = true;
-wallsRight[1][5] = true;
 wallsRight[2][1] = true;
-wallsRight[2][2] = true;
-wallsRight[2][3] = true;
-wallsRight[2][4] = true;
+wallsRight[3][1] = true;
+wallsRight[5][1] = true;
+wallsRight[3][2] = true;
+wallsRight[0][3] = true;
+wallsRight[1][3] = true;
 wallsRight[3][3] = true;
+wallsRight[4][3] = true;
+wallsRight[1][4] = true;
+wallsRight[0][5] = true;
+wallsRight[3][5] = true;
+wallsRight[5][5] = true;
 wallsRight[3][6] = true;
-wallsRight[4][1] = true;
-wallsRight[4][2] = true;
-wallsRight[4][4] = true;
-wallsRight[4][5] = true;
-wallsRight[5][3] = true;
-wallsRight[6][2] = true;
-wallsRight[6][4] = true;
-wallsRight[6][6] = true;
 
 // create walls for orientations 2 and 3
 var wallsDown = getOppositeWalls(wallsUp);
@@ -224,9 +219,9 @@ for (var i = 0; i < dimY; i++)
 }
 
 // goal positions && render goal blocks to scene
-const block1Goal = [2, 4]; // goal for the circle/red block
-const block2Goal = [4, 2]; // goal for the x/blue block
-const block3Goal = [1, 0]; // goal for the square/yellow block
+const block1Goal = [6, 3]; // goal for the circle/red block
+const block2Goal = [0, 4]; // goal for the x/blue block
+const block3Goal = [2, 3]; // goal for the square/yellow block
 
 const goal1Pos = getPixelPosition(block1Goal); // pixel position of the circle/red block
 const goal2Pos = getPixelPosition(block2Goal); // pixel position of the x/blue block
@@ -249,9 +244,9 @@ block3G.position.set(goal3Pos[0], goal3Pos[1], zPos - 10);
 scene.add(block3G);
 
 // block positions
-var block1Index = [3, 0]; // indices of the circle/red block
-var block2Index = [3, 1]; // indices of the x/blue block
-var block3Index = [3, 2]; // indices of the square/yellow block
+var block1Index = [0, 6]; // indices of the circle/red block
+var block2Index = [1, 6]; // indices of the x/blue block
+var block3Index = [0, 5]; // indices of the square/yellow block
 
 var block1Pos = getPixelPosition(block1Index); // pixel position of the circle/red block
 var block2Pos = getPixelPosition(block2Index); // pixel position of the x/blue block
