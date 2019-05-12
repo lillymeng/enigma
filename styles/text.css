@@ -33,3 +33,11 @@ a:hover{
 .active a{
     color: #ff8f00 !important;
 }
+
+.grow {
+  transition: all .2s ease-in-out;
+}
+
+.grow:hover {
+  transform: scale(1.1);
+}
