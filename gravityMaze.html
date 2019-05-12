@@ -7,13 +7,50 @@
         }
         
     </style>
+
+    <script>
+    function rotateCounterClock() {
+        if (!(rotateCounter || rotateClock || applyGrav)) 
+        {
+            rotateCounter = true;
+            angleFinal -= rotation;
+            orientation = (orientation + 1) % 4;
+            console.log(orientation);
+            requestAnimationFrame(render);
+        }
+    }
+
+    </script>
+
+    <script>
+    function rotateClockClock() {
+        if (!(rotateCounter || rotateClock || applyGrav)) 
+        {
+            rotateClock = true;
+            angleFinal += rotation;
+            orientation -= 1;
+            if (orientation == -1)
+            {
+                orientation = 3;
+            }
+            console.log(orientation);
+            requestAnimationFrame(render);
+        }
+    }
+    </script>
 </head>
+
 <body>
+    <button onclick="rotateCounterClock()">Rotate Counter Clockwise</button>
+    <button onclick="rotateClockClock()">Rotate Clockwise</button>
+
+    <p id="demo"></p>
 
     <canvas id="myCanvas"></canvas>
 
     <script src="js/three.js"></script>
-    <script src="js/maze.js">
-    </script>
+    <script src="js/maze.js"></script>
 </body>
+
+
 </html>

@@ -71,7 +71,7 @@ function getOppositeWalls(myWalls)
 	{
 		for (var j = 1; j < dimY; j++)
 		{
-			newWalls[i][j] = myWalls[i][dimY - j];
+			newWalls[i][j] = myWalls[dimX - i - 1][dimY - j];
 		}
 	}
 
@@ -313,16 +313,15 @@ function getBlocks()
 
 // variables for camera rotation
 var angle = Math.PI / 2;
-var angleFinal = 0;
-const angleIncr = .02;
+var angleFinal = angle;
+const angleIncr = .015;
 
-const rotation = Math.PI;
+const rotation = Math.PI / 2;
 
-var rotateCounter = true;
+var rotateCounter = false;
 var rotateClock = false;
 var applyGrav = false;
 var inMotion = false;
-orientation = 1;
 
 // camera rotation
 function rotateCameraCounterClock()
@@ -419,7 +418,7 @@ function checkCollision(blockNum)
 	if (orientation == 2)
 	{
 		var myIndex = getDownIndexFromUp(myBlock);
-		if (wallsRight[myIndex[0]][myIndex[1]])
+		if (wallsDown[myIndex[0]][myIndex[1]])
 		{
 			return true;
 		}
@@ -437,7 +436,7 @@ function checkCollision(blockNum)
 	if (orientation == 3)
 	{
 		var myIndex = getLeftIndexFromUp(myBlock);
-		if (wallsRight[myIndex[0]][myIndex[1]])
+		if (wallsLeft[myIndex[0]][myIndex[1]])
 		{
 			return true;
 		}
@@ -524,10 +523,15 @@ function gravityCheck()
 		block1Pos = getPixelPosition(block1Index);
 		block2Pos = getPixelPosition(block2Index); 
 		block3Pos = getPixelPosition(block3Index); 
+
+		if (inMotion == false)
+		{
+			applyGrav = false;
+		}
 	}
 }
 
-var posIncrement = 1;
+var posIncrement = 2;
 
 function updatePosition()
 {
@@ -535,19 +539,19 @@ function updatePosition()
 
 	if (orientation == 0)
 	{
-		if (block1.position.y > block1Pos[0])
+		if (block1.position.y > block1Pos[1])
 		{
 			block1.position.set(block1.position.x, block1.position.y - posIncrement, zPos);
 			updating = true;
 		}
 
-		if (block2.position.y > block2Pos[0])
+		if (block2.position.y > block2Pos[1])
 		{
 			block2.position.set(block2.position.x, block2.position.y - posIncrement, zPos);
 			updating = true;
 		}
 
-		if (block3.position.y > block3Pos[0])
+		if (block3.position.y > block3Pos[1])
 		{
 			block3.position.set(block3.position.x, block3.position.y - posIncrement, zPos);
 			updating = true;
@@ -577,19 +581,19 @@ function updatePosition()
 
 	else if (orientation == 2)
 	{
-		if (block1.position.y < block1Pos[0])
+		if (block1.position.y < block1Pos[1])
 		{
 			block1.position.set(block1.position.x, block1.position.y + posIncrement, zPos);
 			updating = true;
 		}
 
-		if (block2.position.y < block2Pos[0])
+		if (block2.position.y < block2Pos[1])
 		{
 			block2.position.set(block2.position.x, block2.position.y + posIncrement, zPos);
 			updating = true;
 		}
 
-		if (block3.position.y < block3Pos[0])
+		if (block3.position.y < block3Pos[1])
 		{
 			block3.position.set(block3.position.x, block3.position.y + posIncrement, zPos);
 			updating = true;
@@ -626,24 +630,34 @@ function updatePosition()
 }
 
 //RENDER LOOP
+renderer.render(scene, camera);
 requestAnimationFrame(render);
 
 function render() 
 {
+	var rendering = false;
+	
 	if (rotateCounter)
 	{
     	rotateCameraCounterClock();
+    	rendering = true;
 	}
 
 	if (rotateClock)
 	{
-
+		rotateCameraClock();
+		rendering = true;
 	}
 	
 	if (applyGrav)
 	{
 		gravityCheck();
+		rendering = true;
 	}
-    renderer.render(scene, camera);
-    requestAnimationFrame(render);
+
+	if (rendering)
+	{
+	    renderer.render(scene, camera);
+	    requestAnimationFrame(render);
+	}
 }
