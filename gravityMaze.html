@@ -17,6 +17,12 @@
             orientation = (orientation + 1) % 4;
             console.log(orientation);
             requestAnimationFrame(render);
+
+            // check if the blocks are at the goal
+            if (checkGoal())
+            {
+                document.getElementById("messageLoc").innerHTML = "Congrats! Your navigation skills are a-maze-ing.";
+            }
         }
     }
 
@@ -35,16 +41,22 @@
             }
             console.log(orientation);
             requestAnimationFrame(render);
+
+            // check if the blocks are at the goal
+            if (checkGoal())
+            {
+                document.getElementById("messageLoc").innerHTML = "Congrats! Your navigation skills are a-maze-ing.";
+            }
         }
     }
     </script>
 </head>
 
 <body>
-    <button onclick="rotateCounterClock()">Rotate Counter Clockwise</button>
     <button onclick="rotateClockClock()">Rotate Clockwise</button>
+    <button onclick="rotateCounterClock()">Rotate Counter Clockwise</button>
 
-    <p id="demo"></p>
+    <p id="messageLoc"></p>
 
     <canvas id="myCanvas"></canvas>
 

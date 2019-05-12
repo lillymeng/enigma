@@ -223,6 +223,31 @@ for (var i = 0; i < dimY; i++)
 	scene.add(myWall);
 }
 
+// goal positions && render goal blocks to scene
+const block1Goal = [2, 4]; // goal for the circle/red block
+const block2Goal = [4, 2]; // goal for the x/blue block
+const block3Goal = [1, 0]; // goal for the square/yellow block
+
+const goal1Pos = getPixelPosition(block1Goal); // pixel position of the circle/red block
+const goal2Pos = getPixelPosition(block2Goal); // pixel position of the x/blue block
+const goal3Pos = getPixelPosition(block3Goal); // pixel position of the square/yellow block
+
+// add blocks to the scene
+var material1G = new THREE.MeshLambertMaterial({color: 0xa00000});
+var block1G = new THREE.Mesh(blockGeom, material1G);
+block1G.position.set(goal1Pos[0], goal1Pos[1], zPos - 10);
+scene.add(block1G);
+
+var material2G = new THREE.MeshLambertMaterial({color: 0x0000a0});
+var block2G = new THREE.Mesh(blockGeom, material2G);
+block2G.position.set(goal2Pos[0], goal2Pos[1], zPos - 10);
+scene.add(block2G);
+
+var material3G = new THREE.MeshLambertMaterial({color: 0xa0a000});
+var block3G = new THREE.Mesh(blockGeom, material3G);
+block3G.position.set(goal3Pos[0], goal3Pos[1], zPos - 10);
+scene.add(block3G);
+
 // block positions
 var block1Index = [3, 0]; // indices of the circle/red block
 var block2Index = [3, 1]; // indices of the x/blue block
@@ -314,9 +339,9 @@ function getBlocks()
 // variables for camera rotation
 var angle = Math.PI / 2;
 var angleFinal = angle;
-const angleIncr = .015;
-
+const angleIncr = Math.PI / 40;
 const rotation = Math.PI / 2;
+const EPS = .00001;
 
 var rotateCounter = false;
 var rotateClock = false;
@@ -330,7 +355,7 @@ function rotateCameraCounterClock()
 	camera.lookAt(0, 0, 0);
 	angle -= angleIncr;
 
-	if (angle < angleFinal)
+	if (angle + EPS < angleFinal)
 	{
 		rotateCounter = false;
 		applyGrav = true;
@@ -344,7 +369,7 @@ function rotateCameraClock()
 	camera.lookAt(0, 0, 0);
 	angle += angleIncr;
 
-	if (angle > angleFinal)
+	if (angle - EPS > angleFinal)
 	{
 		rotateClock = false;
 		applyGrav = true;
@@ -531,7 +556,7 @@ function gravityCheck()
 	}
 }
 
-var posIncrement = 2;
+var posIncrement = 7.5;
 
 function updatePosition()
 {
@@ -539,19 +564,19 @@ function updatePosition()
 
 	if (orientation == 0)
 	{
-		if (block1.position.y > block1Pos[1])
+		if (block1.position.y - EPS > block1Pos[1])
 		{
 			block1.position.set(block1.position.x, block1.position.y - posIncrement, zPos);
 			updating = true;
 		}
 
-		if (block2.position.y > block2Pos[1])
+		if (block2.position.y - EPS > block2Pos[1])
 		{
 			block2.position.set(block2.position.x, block2.position.y - posIncrement, zPos);
 			updating = true;
 		}
 
-		if (block3.position.y > block3Pos[1])
+		if (block3.position.y - EPS > block3Pos[1])
 		{
 			block3.position.set(block3.position.x, block3.position.y - posIncrement, zPos);
 			updating = true;
@@ -560,19 +585,19 @@ function updatePosition()
 
 	else if (orientation == 1)
 	{
-		if (block1.position.x > block1Pos[0])
+		if (block1.position.x - EPS > block1Pos[0])
 		{
 			block1.position.set(block1.position.x - posIncrement, block1.position.y, zPos);
 			updating = true;
 		}
 
-		if (block2.position.x > block2Pos[0])
+		if (block2.position.x - EPS > block2Pos[0])
 		{
 			block2.position.set(block2.position.x - posIncrement, block2.position.y, zPos);
 			updating = true;
 		}
 
-		if (block3.position.x > block3Pos[0])
+		if (block3.position.x - EPS > block3Pos[0])
 		{
 			block3.position.set(block3.position.x - posIncrement, block3.position.y, zPos);
 			updating = true;
@@ -581,19 +606,19 @@ function updatePosition()
 
 	else if (orientation == 2)
 	{
-		if (block1.position.y < block1Pos[1])
+		if (block1.position.y + EPS < block1Pos[1])
 		{
 			block1.position.set(block1.position.x, block1.position.y + posIncrement, zPos);
 			updating = true;
 		}
 
-		if (block2.position.y < block2Pos[1])
+		if (block2.position.y + EPS < block2Pos[1])
 		{
 			block2.position.set(block2.position.x, block2.position.y + posIncrement, zPos);
 			updating = true;
 		}
 
-		if (block3.position.y < block3Pos[1])
+		if (block3.position.y + EPS < block3Pos[1])
 		{
 			block3.position.set(block3.position.x, block3.position.y + posIncrement, zPos);
 			updating = true;
@@ -602,19 +627,19 @@ function updatePosition()
 
 	else if (orientation == 3)
 	{
-		if (block1.position.x < block1Pos[0])
+		if (block1.position.x + EPS < block1Pos[0])
 		{
 			block1.position.set(block1.position.x + posIncrement, block1.position.y, zPos);
 			updating = true;
 		}
 
-		if (block2.position.x < block2Pos[0])
+		if (block2.position.x + EPS < block2Pos[0])
 		{
 			block2.position.set(block2.position.x + posIncrement, block2.position.y, zPos);
 			updating = true;
 		}
 
-		if (block3.position.x < block3Pos[0])
+		if (block3.position.x + EPS < block3Pos[0])
 		{
 			block3.position.set(block3.position.x + posIncrement, block3.position.y, zPos);
 			updating = true;
@@ -627,6 +652,16 @@ function updatePosition()
 	{
 		inMotion = false;
 	}
+}
+
+// check if the blocks are all in their goal positions
+function checkGoal()
+{
+	var goal1 = (block1Index[0] == block1Goal[0] && block1Index[1] == block1Goal[1]);
+	var goal2 = (block2Index[0] == block2Goal[0] && block2Index[1] == block2Goal[1]);
+	var goal3 = (block3Index[0] == block3Goal[0] && block3Index[1] == block3Goal[1]);
+
+	return (goal1 && goal2 && goal3);
 }
 
 //RENDER LOOP
