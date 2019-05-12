@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <link rel="stylesheet" href="styles/landing.css">
+    <link rel="stylesheet" href="styles/text.css">
 
     <title>enigma</title>
 
@@ -31,12 +32,13 @@
   <body>
     <div class="container">
         <div class="row justify-content-center mt-5">
-            <div class="col col-md-4 text-justify mt-5">
-                <img class="mt-5" src="logo-title-transparent.png" style="width:100%">
-                <br><br><br>
+            <div class="col col-md-7 text-justify mt-5">
+                <canvas class="center" id="myCanvas"></canvas>
+                <script src="three.js"></script>
+                <script src="enigmaLogo.js"></script>
+                <img class="mt-2 mb-5 center" src="enigma-text-transparent.png" style="width:70%">
                 <a href="puzzle.html">
                     <button class="mx-auto d-block btn-hover dark">start solving</button>
-
                 </a>
             </div>
         </div>
