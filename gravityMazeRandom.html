@@ -1,0 +1,79 @@
+<html>
+<head>
+    <style>
+    	body{
+    		margin: 0;
+    		overflow: hidden;
+        }
+    </style>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>enigma</title>
+
+    <link rel="stylesheet" href="styles/landing.css">
+    <link rel="stylesheet" href="styles/text.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/gravityMaze.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat+Alternates" rel="stylesheet">
+    <!-- Font Awesome icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+    <script>
+    function rotateCounterClock() {
+        if (!(rotateCounter || rotateClock || applyGrav)) 
+        {
+            rotateCounter = true;
+            angleFinal -= rotation;
+            orientation = (orientation + 1) % 4;
+            requestAnimationFrame(render);
+        }
+    }
+
+    </script>
+
+    <script>
+    function rotateClockClock() {
+        if (!(rotateCounter || rotateClock || applyGrav)) 
+        {
+            rotateClock = true;
+            angleFinal += rotation;
+            orientation -= 1;
+            if (orientation == -1)
+            {
+                orientation = 3;
+            }
+            requestAnimationFrame(render);
+        }
+    }
+    </script>
+</head>
+
+<body>
+    <header style="position:relative">
+      <a class="grow" href="puzzles.html">< back to puzzles</a>
+    </header>
+
+    <div class="canvas-container">
+        <div class="row justify-content-center pt-4" style="position: absolute; width: 100%">
+            <h3 id="instructions" class="pb-3">Rotate to move the boxes to their finishing points of the same color</h3>
+        </div>
+        <canvas id="myCanvas"></canvas>
+        <button class="btn-lg" id="rotateCounterClockwise" onclick="rotateCounterClock()"><i class="fas fa-angle-left"></i></button>
+        <button class="btn-lg" id="rotateClockwise" onclick="rotateClockClock()"><i class="fas fa-angle-right"></i></button>
+    </div>
+
+    <script src="js/three.js"></script>
+    <script src="js/mazeRandom.js"></script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>  
+</body>
+
+
+</html>
