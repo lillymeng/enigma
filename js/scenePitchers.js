@@ -53,15 +53,17 @@ function handleClickPitcher(pitcher) {
 
   // the pitcher clicked is empty and it is the first one
   if (pitcherisEmpty(pitcher) && numClicked == 0) {
+    // TODO: add error message?
     return;
   }
 
   // the pitcher clicked is full and it is the second one
   if (pitcherIsFull(pitcher) && numClicked == 1) {
+    // TODO: add error message?
     return;
   }
 
-  // unlclick pitcher
+  // unclick pitcher
   if (pitcher.isClicked) {
     numClicked--;
     pitcher.isClicked = false;
@@ -106,6 +108,10 @@ function pitcherIsFull(pitcher) {
 
 function pitcherisEmpty(pitcher) {
   return pitcher.quartsMilk == 0;
+}
+
+function isGoal() {
+  return (pitcher10.quartsMilk == 5 && pitcher7.quartsMilk == 5);
 }
 
 //RENDERER
