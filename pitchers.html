@@ -1,12 +1,11 @@
 <html>
 
 <head>
-    <!-- <style>
+    <style>
     	body{
     		margin: 0;
-    		overflow: hidden;
         }
-    </style> -->
+    </style>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -44,7 +43,7 @@
             </button>
           </div>
           <div class="modal-body instructions">
-            The 3 pitchers can hold 5, 7, and 10 quarts of milk.
+            The 3 pitchers can hold 3, 7, and 10 quarts of milk.
             <br><br>
             Objective: Pour the milk between pitchers until the 2 leftmost pitchers each hold 5 quarts of milk.
             <br><br>
@@ -61,9 +60,9 @@
 
     <div class="canvas-container">
         <div class="row justify-content-center pt-4 mt-5" style="position: absolute; top: 480px; width: 100%">
-            <h3 id="pitcherLevel" class="pb-3" style="position: relative; z-index: 10; left: -19%; top: 90%">10</h3>
-            <h3 id="pitcherLevel" class="pb-3" style="position: relative; z-index: 10; left: 1%; top: 90%">7</h3>
-            <h3 id="pitcherLevel" class="pb-3" style="position: relative; z-index: 10; left: 22%; top: 90%">5</h3>
+            <h3 id="pitcherLevel-10" class="pb-3" style="position: relative; z-index: 10; left: -19%; top: 90%">10</h3>
+            <h3 id="pitcherLevel-7" class="pb-3" style="position: relative; z-index: 10; left: 1%; top: 90%">0</h3>
+            <h3 id="pitcherLevel-3" class="pb-3" style="position: relative; z-index: 10; left: 22%; top: 90%">0</h3>
         </div>
         <canvas id="canvasPitchers"></canvas>
     </div>

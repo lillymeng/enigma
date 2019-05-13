@@ -38,13 +38,6 @@ function handleMouseMove(event) {
   }
 }
 
-function handleWindowResize() {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-
-  renderer.setSize(window.innerWidth, window.innerHeight);
-}
-
 function handleClickPitcher(pitcher) {
   // check if two pitchers already clicked
   if (numClicked >= 2) return;
@@ -98,6 +91,13 @@ function pourMilk(pitcherToPour, pitcherToFill) {
   pitcherToPour.quartsMilk--;
   pitcherToFill.milk = newMilkFillMesh;
   pitcherToFill.quartsMilk++;
+
+  // change labels
+  let labelPour = 'pitcherLevel-' + pitcherToPour.capacity;
+  let labelFill = 'pitcherLevel-' + pitcherToFill.capacity;
+
+  document.getElementById(labelPour).innerHTML = parseInt(document.getElementById(labelPour).innerHTML) - 1;
+  document.getElementById(labelFill).innerHTML = parseInt(document.getElementById(labelFill).innerHTML) + 1;
 }
 
 function pitcherIsFull(pitcher) {
@@ -153,9 +153,9 @@ let milkMesh10 = new THREE.Mesh(milk10, materialMilk);
 milkMesh10.position.set(-200, -150, -1001);
 
 // create 7-quart container
-let quart7 = new THREE.CylinderGeometry(40, 40, 100, 12);
+let quart7 = new THREE.CylinderGeometry(40, 40, 90, 12);
 let quartMesh7 = new THREE.Mesh(quart7, materialQuart);
-quartMesh7.position.set(0, -150, -1000);
+quartMesh7.position.set(0, -155, -1000);
 quartMesh7.onClick = handleClickPitcher;
 
 // create milk contained in 7-quart pitcher
@@ -163,45 +163,50 @@ let milk7 = new THREE.CylinderGeometry(40, 40, 0, 12);
 let milkMesh7= new THREE.Mesh(milk7, materialMilk);
 milkMesh7.position.set(0, -200, -1001);
 
-// create 5-quart container
-let quart5 = new THREE.CylinderGeometry(40, 40, 70, 12);
-let quartMesh5 = new THREE.Mesh(quart5, materialQuart);
-quartMesh5.position.set(200, -165, -1000);
-quartMesh5.onClick = handleClickPitcher;
+// create 3-quart container
+let quart3 = new THREE.CylinderGeometry(40, 40, 50, 12);
+let quartMesh3 = new THREE.Mesh(quart3, materialQuart);
+quartMesh3.position.set(200, -175, -1000);
+quartMesh3.onClick = handleClickPitcher;
 
 // create milk contained in 5-quart pitcher
-let milk5 = new THREE.CylinderGeometry(40, 40, 0, 12);
-let milkMesh5 = new THREE.Mesh(milk5, materialMilk);
-milkMesh5.position.set(200, -200, -1001);
+let milk3 = new THREE.CylinderGeometry(40, 40, 0, 12);
+let milkMesh3 = new THREE.Mesh(milk3, materialMilk);
+milkMesh3.position.set(200, -200, -1001);
 
 // create the three pitchers (container + milk)
 let pitcher10 = new Pitcher(quartMesh10, milkMesh10, 10, 10, false, null);
 let pitcher7 = new Pitcher(quartMesh7, milkMesh7, 7, 0, false, null);
-let pitcher5 = new Pitcher(quartMesh5, milkMesh5, 5, 0, false, null);
+let pitcher3 = new Pitcher(quartMesh3, milkMesh3, 3, 0, false, null);
 
 // add pitcher objects to the meshes for simplicity
 quartMesh10.pitcher = pitcher10;
 quartMesh7.pitcher = pitcher7;
-quartMesh5.pitcher = pitcher5;
+quartMesh3.pitcher = pitcher3;
 
 scene.add(pitcher10.container);
 scene.add(pitcher10.milk);
 scene.add(pitcher7.container);
 scene.add(pitcher7.milk);
-scene.add(pitcher5.container);
-scene.add(pitcher5.milk);
+scene.add(pitcher3.container);
+scene.add(pitcher3.milk);
 
 // listeners
 document.addEventListener('click', handleClick, false);
 document.addEventListener('mousemove', handleMouseMove);
-document.addEventListener('resize', handleWindowResize, false);
-
 
 //RENDER LOOP
 requestAnimationFrame(render);
 
 function render() {
-    // pouring complete
+    // resize
+    let canvas = renderer.domElement;
+    if (canvas.clientWidth != window.innerWidth || canvas.clientHeight != window.innerHeight) {
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+    }
+
     if (numClicked == 2) {
       if (pitcherisEmpty(clicked[0]) || pitcherIsFull(clicked[1])) {
         numClicked = 0;
@@ -214,7 +219,7 @@ function render() {
       }
     }
 
-    // renderer.clear();
+    renderer.clear();
     renderer.render(scene, camera);
     requestAnimationFrame(render);
 }

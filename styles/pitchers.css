@@ -21,7 +21,21 @@ canvas {
   width: 100%;
 }
 
-#pitcherLevel {
+#pitcherLevel-10 {
+  position: absolute;
+  top: 42%;
+  z-index: 10;
+  font-size: 20px;
+}
+
+#pitcherLevel-7 {
+  position: absolute;
+  top: 42%;
+  z-index: 10;
+  font-size: 20px;
+}
+
+#pitcherLevel-3 {
   position: absolute;
   top: 42%;
   z-index: 10;
