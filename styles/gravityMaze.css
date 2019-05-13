@@ -8,18 +8,18 @@
 }
 #rotateClockwise {
   position: absolute;
-  left: 600px;
-  top: 70px;
+  left: 52%;
+  top: 12%;
 }
 #rotateCounterClockwise {
   position: absolute;
-  left: 540px;
-  top: 70px;
+  left: 46%;
+  top: 12%;
 }
 h3 {
 	position: absolute;
 	color: #064f09;
-  	font-size: 20px;
+	font-size: 20px;
 	z-index: 5;
-  	font-family: 'Montserrat Alternates', sans-serif;
+	font-family: 'Montserrat Alternates', sans-serif;
 }

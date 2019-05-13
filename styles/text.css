@@ -48,3 +48,12 @@ button:hover {
 .grow:hover {
   transform: scale(1.1);
 }
+
+.instructions {
+  font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.instructions-title {
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-weight: bold;
+}
