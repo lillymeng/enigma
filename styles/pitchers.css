@@ -8,6 +8,19 @@ canvas {
   background: url('../images/kitchen_resized.jpg');
   background-size: cover;
   background-position: center center;
-  /* background-attachment: fixed; */
   position: absolute;
+}
+
+#quarts-10 {
+}
+
+#quarts-7 {
+}
+
+#quarts-5 {
+}
+
+h3 {
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 15px;
 }
