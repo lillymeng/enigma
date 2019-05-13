@@ -16,6 +16,16 @@
     <link rel="stylesheet" href="styles/text.css">
     <link rel="stylesheet" href="styles/header.css">
     <link rel="stylesheet" href="styles/gravityMaze.css">
+
+    <!-- from realfavicongenerator.net -->
+    <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+    <link rel="manifest" href="favicons/site.webmanifest">
+    <link rel="mask-icon" href="favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="theme-color" content="#ffffff">
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat+Alternates" rel="stylesheet">
     <!-- Font Awesome icons -->
@@ -63,7 +73,32 @@
 <body>
     <header style="position:relative">
       <a class="grow" href="puzzles.html">< back to puzzles</a>
+      <button class="btn float-right info" onclick="$('.modal').modal('show');" data-toggle="tooltip" data-placement="top" title="instructions"><i class="fas fa-info"></i></button>
+      <button class="btn align-middle float-right mr-3 reset" onclick="reset();" data-toggle="tooltip" data-placement="top" title="reset" style="font-family: 'Montserrat Alternates;'"><i class="fas fa-undo"></i></button>
     </header>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title instructions-title" id="exampleModalLabel">gravity maze: random</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body instructions">
+            Rotate the maze to move the boxes to their finishing points of the same color.
+            <br><br>
+            Some moves may leave you in an unsolvable state. All mazes can be solved within 7 moves. If you get too stuck, hit the reset button!
+            <br><br>
+            Good luck!
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">start solving</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="canvas-container">
         <div class="row justify-content-center pt-4" style="position: absolute; width: 100%">
@@ -82,7 +117,14 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>  
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        $('.modal').modal('show');
+        $(function () {
+          $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>  
 </body>
 
 
