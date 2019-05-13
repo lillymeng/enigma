@@ -11,13 +11,21 @@ canvas {
   position: absolute;
 }
 
-#quarts-10 {
+.canvas-container{
+  position: relative;
 }
 
-#quarts-7 {
+#myCanvas {
+  position: relative;
+  height: 100%;
+  width: 100%;
 }
 
-#quarts-5 {
+#pitcherLevel {
+  position: absolute;
+  top: 42%;
+  z-index: 10;
+  font-size: 20px;
 }
 
 h3 {
