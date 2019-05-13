@@ -358,7 +358,6 @@ function getBlocks()
 }
 
 
-
 // use this to change the up direction for the camera
 // camera.up.set(1, 1, 0);
 // camera.lookAt(0, 0, 0);
@@ -699,7 +698,6 @@ const numSteps = 7; // number of steps to get to the goal
 
 for (var step = 0; step < numSteps; step++)
 {
-	console.log(step);
 	if (Math.random() > .5)
 	{
 		orientation++;
@@ -784,6 +782,33 @@ function crazyRotate()
 	camera.up.set(Math.cos(angle), Math.sin(angle), 0);
 	camera.lookAt(0, 0, 0);
 	angle -= angleIncr;
+}
+
+function reset()
+{
+	orientation = 0;
+	angle = Math.PI / 2;
+	angleFinal = angle;
+
+	camera.up.set(Math.cos(angle), Math.sin(angle), 0);
+	camera.lookAt(0, 0, 0);
+
+	block1Index[0] = block1Origin[0];
+	block1Index[1] = block1Origin[1];
+	block2Index[0] = block2Origin[0];
+	block2Index[1] = block2Origin[1];
+	block3Index[0] = block3Origin[0];
+	block3Index[1] = block3Origin[1];
+
+	block1Pos = getPixelPosition(block1Index);
+	block2Pos = getPixelPosition(block2Index); 
+	block3Pos = getPixelPosition(block3Index); 
+
+	block1.position.set(block1Pos[0], block1Pos[1], zPos);
+	block2.position.set(block2Pos[0], block2Pos[1], zPos);
+	block3.position.set(block3Pos[0], block3Pos[1], zPos);
+
+	renderer.render(scene, camera);
 }
 
 function render() 

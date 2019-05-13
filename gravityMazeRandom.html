@@ -49,6 +49,15 @@
         }
     }
     </script>
+
+    <script>
+    function callReset() {
+        if (!(rotateCounter || rotateClock || applyGrav)) 
+        {
+            reset();
+        }
+    }
+    </script>
 </head>
 
 <body>
@@ -63,6 +72,7 @@
         <canvas id="myCanvas"></canvas>
         <button class="btn-lg" id="rotateCounterClockwise" onclick="rotateCounterClock()"><i class="fas fa-angle-left"></i></button>
         <button class="btn-lg" id="rotateClockwise" onclick="rotateClockClock()"><i class="fas fa-angle-right"></i></button>
+        <button class="btn-lg" id="callReset" onclick="callReset()"><i class="fas fa-angle-right"></i></button>
     </div>
 
     <script src="js/three.js"></script>
