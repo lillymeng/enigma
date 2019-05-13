@@ -1,18 +1,18 @@
 // <a href="https://www.freepik.com/free-photos-vectors/background">Background vector created by vectorpocket - www.freepik.com</a>
 
 // pitcher object
-function Pitcher(container, milk, capacity, quartsMilk, isClicked) {
+function Pitcher(container, milk, capacity, quartsMilk, isClicked, edges) {
   this.container = container;
   this.milk = milk;
   this.capacity = capacity;
   this.quartsMilk = quartsMilk;
   this.isClicked = isClicked;
+  this.edges = edges;
 }
 
 function handleClick(event) {
   event.preventDefault();
 
-  let mouse = new THREE.Vector2();
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
@@ -20,10 +20,31 @@ function handleClick(event) {
   raycaster.setFromCamera(mouse, camera);
 
   let intersects = raycaster.intersectObjects(scene.children);
-  //
   if (intersects.length > 0) {
     intersects[0].object.onClick(intersects[0].object.pitcher);
   }
+}
+
+function handleMouseMove(event) {
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  let raycaster = new THREE.Raycaster();
+  raycaster.setFromCamera(mouse, camera);
+
+  let intersects = raycaster.intersectObjects(scene.children);
+  if (intersects.length > 0) {
+  }
+  else {
+
+  }
+}
+
+function handleWindowResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
 function handleClickPitcher(pitcher) {
@@ -87,13 +108,6 @@ function pitcherisEmpty(pitcher) {
   return pitcher.quartsMilk == 0;
 }
 
-function handleWindowResize() {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-
-  renderer.setSize(window.innerWidth, window.innerHeight);
-}
-
 //RENDERER
 var renderer = new THREE.WebGLRenderer({canvas: document.getElementById('canvasPitchers'), antialias: true, alpha: true});
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -112,6 +126,8 @@ scene.add(light);
 var light1 = new THREE.PointLight(0xffffff, 0.5);
 scene.add(light1);
 
+// MOUSE
+let mouse = new THREE.Vector2();
 
 // tracks clicked
 let numClicked = 0;
@@ -155,9 +171,9 @@ let milkMesh5 = new THREE.Mesh(milk5, materialMilk);
 milkMesh5.position.set(200, -200, -1001);
 
 // create the three pitchers (container + milk)
-let pitcher10 = new Pitcher(quartMesh10, milkMesh10, 10, 10, false);
-let pitcher7 = new Pitcher(quartMesh7, milkMesh7, 7, 0, false);
-let pitcher5 = new Pitcher(quartMesh5, milkMesh5, 5, 0, false);
+let pitcher10 = new Pitcher(quartMesh10, milkMesh10, 10, 10, false, null);
+let pitcher7 = new Pitcher(quartMesh7, milkMesh7, 7, 0, false, null);
+let pitcher5 = new Pitcher(quartMesh5, milkMesh5, 5, 0, false, null);
 
 // add pitcher objects to the meshes for simplicity
 quartMesh10.pitcher = pitcher10;
@@ -171,27 +187,11 @@ scene.add(pitcher7.milk);
 scene.add(pitcher5.container);
 scene.add(pitcher5.milk);
 
+// listeners
+document.addEventListener('click', handleClick, false);
+document.addEventListener('mousemove', handleMouseMove);
+document.addEventListener('resize', handleWindowResize, false);
 
-document.addEventListener('click', handleClick);
-document.addEventListener('resize', handleWindowResize);
-
-// create kitchen background scene
-// let loader = new THREE.TextureLoader();
-// let kitchenTexture = loader.load('/images/kitchen.jpg')
-//
-// let kitchenBackground = new THREE.Mesh(
-//   new THREE.PlaneGeometry(2, 2, 0),
-//   new THREE.MeshBasicMaterial({
-//       map: kitchenTexture})
-// );
-//
-// kitchenBackground.material.depthTest = false;
-// kitchenBackground.material.depthWrite = false;
-//
-// let kitchenScene = new THREE.Scene();
-// let kitchenCamera = new THREE.Camera();
-// kitchenScene.add(kitchenBackground);
-// kitchenScene.add(kitchenCamera);
 
 //RENDER LOOP
 requestAnimationFrame(render);
@@ -210,8 +210,7 @@ function render() {
       }
     }
 
-
-    renderer.clear();
+    // renderer.clear();
     renderer.render(scene, camera);
     requestAnimationFrame(render);
 }
