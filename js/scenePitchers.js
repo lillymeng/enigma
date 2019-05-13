@@ -114,6 +114,7 @@ function isGoal() {
 
 //RENDERER
 var renderer = new THREE.WebGLRenderer({canvas: document.getElementById('canvasPitchers'), antialias: true, alpha: true});
+let canvas = renderer.domElement;
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -144,35 +145,35 @@ let materialMilk = new THREE.MeshLambertMaterial({color: 0xffffff});
 // create 10-quart container
 let quart10 = new THREE.CylinderGeometry(40, 40, 120, 12);
 let quartMesh10 = new THREE.Mesh(quart10, materialQuart);
-quartMesh10.position.set(-200, -140, -1000);
+quartMesh10.position.set(-(canvas.clientWidth / 6), -(canvas.clientHeight / 5), -1000);
 quartMesh10.onClick = handleClickPitcher;
 
 // create milk contained in 10-quart pitcher
 let milk10 = new THREE.CylinderGeometry(40, 40, 100, 12);
 let milkMesh10 = new THREE.Mesh(milk10, materialMilk);
-milkMesh10.position.set(-200, -150, -1001);
+milkMesh10.position.set(-(canvas.clientWidth / 6), -(canvas.clientHeight / 5) - 10, -1001);
 
 // create 7-quart container
 let quart7 = new THREE.CylinderGeometry(40, 40, 90, 12);
 let quartMesh7 = new THREE.Mesh(quart7, materialQuart);
-quartMesh7.position.set(0, -155, -1000);
+quartMesh7.position.set(0, -(canvas.clientHeight / 5) - 15, -1000);
 quartMesh7.onClick = handleClickPitcher;
 
 // create milk contained in 7-quart pitcher
 let milk7 = new THREE.CylinderGeometry(40, 40, 0, 12);
 let milkMesh7= new THREE.Mesh(milk7, materialMilk);
-milkMesh7.position.set(0, -200, -1001);
+milkMesh7.position.set(0, -(canvas.clientHeight / 5) - 60, -1001);
 
 // create 3-quart container
 let quart3 = new THREE.CylinderGeometry(40, 40, 50, 12);
 let quartMesh3 = new THREE.Mesh(quart3, materialQuart);
-quartMesh3.position.set(200, -175, -1000);
+quartMesh3.position.set((canvas.clientWidth / 6), -(canvas.clientHeight / 5) - 35, -1000);
 quartMesh3.onClick = handleClickPitcher;
 
 // create milk contained in 5-quart pitcher
 let milk3 = new THREE.CylinderGeometry(40, 40, 0, 12);
 let milkMesh3 = new THREE.Mesh(milk3, materialMilk);
-milkMesh3.position.set(200, -200, -1001);
+milkMesh3.position.set((canvas.clientWidth / 6), -(canvas.clientHeight / 5) - 60, -1001);
 
 // create the three pitchers (container + milk)
 let pitcher10 = new Pitcher(quartMesh10, milkMesh10, 10, 10, false, null);
@@ -200,7 +201,6 @@ requestAnimationFrame(render);
 
 function render() {
     // resize
-    let canvas = renderer.domElement;
     if (canvas.clientWidth != window.innerWidth || canvas.clientHeight != window.innerHeight) {
       renderer.setSize(window.innerWidth, window.innerHeight);
       camera.aspect = window.innerWidth / window.innerHeight;
