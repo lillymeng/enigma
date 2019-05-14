@@ -700,6 +700,8 @@ function reset()
 	block3.position.set(block3Pos[0], block3Pos[1], zPos);
 
 	renderer.render(scene, camera);
+
+    document.getElementById("instructions").innerHTML = "Rotate to move the boxes to their finishing points of the same color";
 }
 
 function render() 
@@ -735,7 +737,8 @@ function render()
 	{
 		if (checkGoal())
         {
-        	document.getElementById("instructions").innerHTML = "Congrats on escaping Labyrinth with your 3 textbooks! Your total comes out to $426. Good thing you won't actually read them after Week 2...";
+        	document.getElementById("instructions").innerHTML = "Congrats! Your puzzle solving skills are a-maze-ing!";
+        	$('#successModal').modal('show');
         }
 	}
 }

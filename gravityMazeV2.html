@@ -78,22 +78,43 @@
 
     </header>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title instructions-title" id="exampleModalLabel">gravity maze: easy</h5>
+            <h5 class="modal-title instructions-title" id="exampleModalLabel">gravity maze: hard</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body instructions">
+          <div class="modal-body instructions px-5">
             Rotate the maze to move the boxes to their finishing points of the same color.
+            <br><br>
+            Use the buttons on screen or left/right arrow keys on your keyboard. The decision is left to you -- whatever feels... right.
             <br><br>
             Good luck!
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">start solving</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title instructions-title" id="exampleModalLabel">success!</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body instructions">
+            Congrats on escaping Labyrinth with your 3 textbooks! Your total comes out to $426.<br><br>Good thing you won't actually read them after Week 2...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">oof</button>
           </div>
         </div>
       </div>
@@ -118,7 +139,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
     <script type="text/javascript">
-        $('.modal').modal('show');
+        $('#infoModal').modal('show');
         $(function () {
           $('[data-toggle="tooltip"]').tooltip()
         })
