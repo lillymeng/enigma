@@ -122,6 +122,14 @@
         $(function () {
           $('[data-toggle="tooltip"]').tooltip()
         })
+        $(document).keydown(function(e){
+            if (e.which == 37){
+                $("#rotateCounterClockwise").click();
+            }
+            if (e.which == 39){
+                $("#rotateClockwise").click();
+            }
+        });
     </script>
 </body>
 

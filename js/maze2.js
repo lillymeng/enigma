@@ -735,7 +735,7 @@ function render()
 	{
 		if (checkGoal())
         {
-        	document.getElementById("instructions").innerHTML = "Congrats! Your puzzle solving skills are a-maze-ing!";
+        	document.getElementById("instructions").innerHTML = "Congrats on escaping Labyrinth with your 3 textbooks! Your total comes out to $426. Good thing you won't actually read them after Week 2...";
         }
 	}
 }
