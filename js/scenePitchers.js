@@ -1,13 +1,13 @@
 // <a href="https://www.freepik.com/free-photos-vectors/background">Background vector created by vectorpocket - www.freepik.com</a>
 
 // pitcher object
-function Pitcher(container, milk, capacity, quartsMilk, isClicked, edges) {
+function Pitcher(container, milk, capacity, quartsMilk, isClicked, label) {
   this.container = container;
   this.milk = milk;
   this.capacity = capacity;
   this.quartsMilk = quartsMilk;
   this.isClicked = isClicked;
-  this.edges = edges;
+  this.label = label;
 }
 
 function handleClick(event) {
@@ -80,24 +80,36 @@ function pourMilk(pitcherToPour, pitcherToFill) {
   let newMilkFillMesh = new THREE.Mesh(newMilkFill, materialMilk);
   newMilkFillMesh.position.set(posFill.x, posFill.y + 5, posFill.z);
 
+  // change labels
+  let posPourLabel = pitcherToPour.label.position;
+  let newLevelPour = (parseInt(pitcherToPour.label.geometry.parameters.text) - 1) + '';
+  let newLabelPour = new THREE.TextGeometry(newLevelPour, {font: storedFont, size: 20, height: 1});
+  let newLabelPourMesh = new THREE.Mesh(newLabelPour, materialText);
+  newLabelPourMesh.position.set(posPourLabel.x, posPourLabel.y, posPourLabel.z);
+
+  let posFillLabel = pitcherToFill.label.position;
+  let newLevelFill = parseInt(pitcherToFill.label.geometry.parameters.text) + 1 + '';
+  let newLabelFill = new THREE.TextGeometry(newLevelFill, {font: storedFont, size: 20, height: 1});
+  let newLabelFillMesh = new THREE.Mesh(newLabelFill, materialText);
+  newLabelFillMesh.position.set(posFillLabel.x, posFillLabel.y, posFillLabel.z);
+
   // make changes to the scene
   scene.remove(pitcherToPour.milk);
   scene.remove(pitcherToFill.milk);
+  scene.remove(pitcherToPour.label);
+  scene.remove(pitcherToFill.label);
   scene.add(newMilkPourMesh);
   scene.add(newMilkFillMesh);
+  scene.add(newLabelPourMesh);
+  scene.add(newLabelFillMesh);
 
   // update the pitcher objects
   pitcherToPour.milk = newMilkPourMesh;
-  pitcherToPour.quartsMilk--;
   pitcherToFill.milk = newMilkFillMesh;
+  pitcherToPour.label = newLabelPourMesh;
+  pitcherToFill.label = newLabelFillMesh;
+  pitcherToPour.quartsMilk--;
   pitcherToFill.quartsMilk++;
-
-  // change labels
-  let labelPour = 'pitcherLevel-' + pitcherToPour.capacity;
-  let labelFill = 'pitcherLevel-' + pitcherToFill.capacity;
-
-  document.getElementById(labelPour).innerHTML = parseInt(document.getElementById(labelPour).innerHTML) - 1;
-  document.getElementById(labelFill).innerHTML = parseInt(document.getElementById(labelFill).innerHTML) + 1;
 }
 
 function pitcherIsFull(pitcher) {
@@ -106,6 +118,10 @@ function pitcherIsFull(pitcher) {
 
 function pitcherisEmpty(pitcher) {
   return pitcher.quartsMilk == 0;
+}
+
+function addLabelToPitcher(pitcher, label) {
+  pitcher.label = label;
 }
 
 function isGoal() {
@@ -141,6 +157,7 @@ let clicked = [null, null];
 // create materials
 let materialQuart = new THREE.MeshLambertMaterial({color: 0xffffff, transparent: true, opacity: 0.5});
 let materialMilk = new THREE.MeshLambertMaterial({color: 0xffffff});
+let materialText = new THREE.MeshLambertMaterial({color: 0x000000});
 
 // create 10-quart container
 let quart10 = new THREE.CylinderGeometry(40, 40, 120, 12);
@@ -170,7 +187,7 @@ let quartMesh3 = new THREE.Mesh(quart3, materialQuart);
 quartMesh3.position.set((canvas.clientWidth / 6), -(canvas.clientHeight / 5) - 35, -1000);
 quartMesh3.onClick = handleClickPitcher;
 
-// create milk contained in 5-quart pitcher
+// create milk contained in 3-quart pitcher
 let milk3 = new THREE.CylinderGeometry(40, 40, 0, 12);
 let milkMesh3 = new THREE.Mesh(milk3, materialMilk);
 milkMesh3.position.set((canvas.clientWidth / 6), -(canvas.clientHeight / 5) - 60, -1001);
@@ -191,6 +208,36 @@ scene.add(pitcher7.container);
 scene.add(pitcher7.milk);
 scene.add(pitcher3.container);
 scene.add(pitcher3.milk);
+
+// create labels
+let loader = new THREE.FontLoader();
+let storedFont;
+let horzOffset = -12;
+let vertOffset10 = 75;
+let vertOffset7 = 50;
+let vertOffset3 = 10;
+
+loader.load('../fonts/Montserrat_Alternates_Regular.json', function(font) {
+  storedFont = font;
+
+  let label10 = new THREE.TextGeometry('10', {font: font, size: 20, height: 1});
+  let labelMesh10 = new THREE.Mesh(label10, materialText);
+  labelMesh10.position.set(-(canvas.clientWidth / 6) + horzOffset, -(canvas.clientHeight / 5) + vertOffset10, -1000);
+  addLabelToPitcher(pitcher10, labelMesh10);
+  scene.add(labelMesh10);
+
+  let label7 = new THREE.TextGeometry('0', {font: font, size: 20, height: 1});
+  let labelMesh7 = new THREE.Mesh(label7, materialText);
+  labelMesh7.position.set(horzOffset, -(canvas.clientHeight / 5) + vertOffset7, -1000);
+  addLabelToPitcher(pitcher7, labelMesh7);
+  scene.add(labelMesh7);
+
+  let label3 = new THREE.TextGeometry('0', {font: font, size: 20, height: 1});
+  let labelMesh3 = new THREE.Mesh(label3, materialText);
+  labelMesh3.position.set((canvas.clientWidth / 6) + horzOffset, -(canvas.clientHeight / 5) + vertOffset3, -1000);
+  addLabelToPitcher(pitcher3, labelMesh3);
+  scene.add(labelMesh3);
+});
 
 // listeners
 document.addEventListener('click', handleClick, false);
