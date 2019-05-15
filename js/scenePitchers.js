@@ -1,13 +1,39 @@
 // <a href="https://www.freepik.com/free-photos-vectors/background">Background vector created by vectorpocket - www.freepik.com</a>
 
 // pitcher object
-function Pitcher(container, milk, capacity, quartsMilk, isClicked, label) {
+function Pitcher(container, milk, capacity, quartsMilk, isClicked, isSelected, label, selectedMesh) {
   this.container = container;
   this.milk = milk;
   this.capacity = capacity;
   this.quartsMilk = quartsMilk;
   this.isClicked = isClicked;
+  this.isSelected = isSelected;
   this.label = label;
+  this.selectedMesh = selectedMesh;
+}
+
+function createSelected(pitcher) {
+  let geometry = pitcher.container.geometry.parameters;
+  let position = pitcher.container.position;
+  let selected = new THREE.CylinderGeometry(geometry.radiusTop, geometry.radiusBottom, geometry.height, geometry.radialSegments);
+  let selectedMesh = new THREE.Mesh(selected, materialSelected);
+  selectedMesh.position.set(position.x, position.y, position.z);
+  selectedMesh.onClick = handleClickPitcher;
+  selectedMesh.pitcher = pitcher;
+  pitcher.selectedMesh = selectedMesh;
+
+  return selectedMesh;
+}
+
+function switchMesh(pitcher) {
+  if (pitcher.isClicked ^ pitcher.isSelected) {
+    scene.remove(pitcher.selectedMesh);
+    scene.add(pitcher.container);
+  }
+  else {
+    scene.remove(pitcher.container);
+    scene.add(pitcher.selectedMesh);
+  }
 }
 
 function handleClick(event) {
@@ -32,9 +58,17 @@ function handleMouseMove(event) {
 
   let intersects = raycaster.intersectObjects(scene.children);
   if (intersects.length > 0) {
+    let pitcher = intersects[0].object.pitcher;
+    if (!pitcher.isClicked && !pitcher.isSelected)
+      switchMesh(pitcher);
+      pitcher.isSelected = true;
   }
   else {
-
+    for (let i = 0; i < pitchers.length; i++) {
+      if (!pitchers[i].isClicked && pitchers[i].isSelected)
+        switchMesh(pitchers[i]);
+        pitchers[i].isSelected = false;
+    }
   }
 }
 
@@ -146,6 +180,7 @@ let clicked = [null, null];
 let materialQuart = new THREE.MeshLambertMaterial({color: 0xffffff, transparent: true, opacity: 0.5});
 let materialMilk = new THREE.MeshLambertMaterial({color: 0xffffff});
 let materialText = new THREE.MeshLambertMaterial({color: 0x000000});
+let materialSelected = new THREE.MeshLambertMaterial({color: 0xa8e3ff, transparent: true, opacity: 0.5});
 
 // create 10-quart container
 let quart10 = new THREE.CylinderGeometry(40, 40, 120, 12);
@@ -181,9 +216,15 @@ let milkMesh3 = new THREE.Mesh(milk3, materialMilk);
 milkMesh3.position.set((canvas.clientWidth / 6), -(canvas.clientHeight / 5) - 60, -1001);
 
 // create the three pitchers (container + milk)
-let pitcher10 = new Pitcher(quartMesh10, milkMesh10, 10, 10, false, null);
-let pitcher7 = new Pitcher(quartMesh7, milkMesh7, 7, 0, false, null);
-let pitcher3 = new Pitcher(quartMesh3, milkMesh3, 3, 0, false, null);
+let pitcher10 = new Pitcher(quartMesh10, milkMesh10, 10, 10, false, false, null, null);
+let pitcher7 = new Pitcher(quartMesh7, milkMesh7, 7, 0, false, false, null, null);
+let pitcher3 = new Pitcher(quartMesh3, milkMesh3, 3, 0, false, false, null, null);
+
+createSelected(pitcher10)
+createSelected(pitcher7)
+createSelected(pitcher3)
+
+let pitchers = [pitcher10, pitcher7, pitcher3];
 
 // add pitcher objects to the meshes for simplicity
 quartMesh10.pitcher = pitcher10;
@@ -266,8 +307,13 @@ function render() {
     if (numClicked == 2) {
       if (pitcherisEmpty(clicked[0]) || pitcherIsFull(clicked[1])) {
         numClicked = 0;
+
+        switchMesh(clicked[0]);
+        switchMesh(clicked[1]);
+
         clicked[0].isClicked = false;
         clicked[1].isClicked = false;
+
         clicked = [];
       }
       else {
