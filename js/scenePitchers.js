@@ -42,18 +42,6 @@ function handleClickPitcher(pitcher) {
   // check if two pitchers already clicked
   if (numClicked >= 2) return;
 
-  // the pitcher clicked is empty and it is the first one
-  if (pitcherisEmpty(pitcher) && numClicked == 0) {
-    // TODO: add error message?
-    return;
-  }
-
-  // the pitcher clicked is full and it is the second one
-  if (pitcherIsFull(pitcher) && numClicked == 1) {
-    // TODO: add error message?
-    return;
-  }
-
   // unclick pitcher
   if (pitcher.isClicked) {
     numClicked--;
@@ -83,13 +71,13 @@ function pourMilk(pitcherToPour, pitcherToFill) {
   // change labels
   let posPourLabel = pitcherToPour.label.position;
   let newLevelPour = (parseInt(pitcherToPour.label.geometry.parameters.text) - 1) + '';
-  let newLabelPour = new THREE.TextGeometry(newLevelPour, {font: storedFont, size: 20, height: 1});
+  let newLabelPour = new THREE.TextGeometry(newLevelPour, {font: storedFont, size: fontLabel, height: 1});
   let newLabelPourMesh = new THREE.Mesh(newLabelPour, materialText);
   newLabelPourMesh.position.set(posPourLabel.x, posPourLabel.y, posPourLabel.z);
 
   let posFillLabel = pitcherToFill.label.position;
   let newLevelFill = parseInt(pitcherToFill.label.geometry.parameters.text) + 1 + '';
-  let newLabelFill = new THREE.TextGeometry(newLevelFill, {font: storedFont, size: 20, height: 1});
+  let newLabelFill = new THREE.TextGeometry(newLevelFill, {font: storedFont, size: fontLabel, height: 1});
   let newLabelFillMesh = new THREE.Mesh(newLabelFill, materialText);
   newLabelFillMesh.position.set(posFillLabel.x, posFillLabel.y, posFillLabel.z);
 
@@ -212,31 +200,52 @@ scene.add(pitcher3.milk);
 // create labels
 let loader = new THREE.FontLoader();
 let storedFont;
-let horzOffset = -12;
+let horzOffsetLabel = -8;
+let horzOffsetName = -37;
 let vertOffset10 = 75;
 let vertOffset7 = 50;
 let vertOffset3 = 10;
+let vertOffsetName = -95;
+let fontLabel = 16;
+let fontPitcher = 12;
 
 loader.load('../fonts/Montserrat_Alternates_Regular.json', function(font) {
   storedFont = font;
 
-  let label10 = new THREE.TextGeometry('10', {font: font, size: 20, height: 1});
+  // level labels
+  let label10 = new THREE.TextGeometry('10', {font: font, size: fontLabel, height: 1});
   let labelMesh10 = new THREE.Mesh(label10, materialText);
-  labelMesh10.position.set(-(canvas.clientWidth / 6) + horzOffset, -(canvas.clientHeight / 5) + vertOffset10, -1000);
+  labelMesh10.position.set(-(canvas.clientWidth / 6) + horzOffsetLabel, -(canvas.clientHeight / 5) + vertOffset10, -1000);
   addLabelToPitcher(pitcher10, labelMesh10);
   scene.add(labelMesh10);
 
-  let label7 = new THREE.TextGeometry('0', {font: font, size: 20, height: 1});
+  let label7 = new THREE.TextGeometry('0', {font: font, size: fontLabel, height: 1});
   let labelMesh7 = new THREE.Mesh(label7, materialText);
-  labelMesh7.position.set(horzOffset, -(canvas.clientHeight / 5) + vertOffset7, -1000);
+  labelMesh7.position.set(horzOffsetLabel, -(canvas.clientHeight / 5) + vertOffset7, -1000);
   addLabelToPitcher(pitcher7, labelMesh7);
   scene.add(labelMesh7);
 
-  let label3 = new THREE.TextGeometry('0', {font: font, size: 20, height: 1});
+  let label3 = new THREE.TextGeometry('0', {font: font, size: fontLabel, height: 1});
   let labelMesh3 = new THREE.Mesh(label3, materialText);
-  labelMesh3.position.set((canvas.clientWidth / 6) + horzOffset, -(canvas.clientHeight / 5) + vertOffset3, -1000);
+  labelMesh3.position.set((canvas.clientWidth / 6) + horzOffsetLabel, -(canvas.clientHeight / 5) + vertOffset3, -1000);
   addLabelToPitcher(pitcher3, labelMesh3);
   scene.add(labelMesh3);
+
+  // pitcher labels
+  let name10 = new THREE.TextGeometry('10-quarts', {font: font, size: fontPitcher, height: 1});
+  let nameMesh10 = new THREE.Mesh(name10, materialText);
+  nameMesh10.position.set(-(canvas.clientWidth / 6) + horzOffsetName - 5, -(canvas.clientHeight / 5) + vertOffsetName, -1000);
+  scene.add(nameMesh10);
+
+  let name7 = new THREE.TextGeometry('7-quarts', {font: font, size: fontPitcher, height: 1});
+  let nameMesh7 = new THREE.Mesh(name7, materialText);
+  nameMesh7.position.set(horzOffsetName, -(canvas.clientHeight / 5) + vertOffsetName, -1000);
+  scene.add(nameMesh7);
+
+  let name3 = new THREE.TextGeometry('3-quarts', {font: font, size: fontPitcher, height: 1});
+  let nameMesh3 = new THREE.Mesh(name3, materialText);
+  nameMesh3.position.set((canvas.clientWidth / 6) + horzOffsetName, -(canvas.clientHeight / 5) + vertOffsetName, -1000);
+  scene.add(nameMesh3);
 });
 
 // listeners
