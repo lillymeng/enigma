@@ -200,13 +200,13 @@ scene.add(pitcher3.milk);
 // create labels
 let loader = new THREE.FontLoader();
 let storedFont;
-let horzOffsetLabel = -8;
+let horzOffsetLabel = -10;
 let horzOffsetName = -37;
 let vertOffset10 = 75;
 let vertOffset7 = 50;
 let vertOffset3 = 10;
 let vertOffsetName = -95;
-let fontLabel = 16;
+let fontLabel = 20;
 let fontPitcher = 12;
 
 loader.load('../fonts/Montserrat_Alternates_Regular.json', function(font) {
