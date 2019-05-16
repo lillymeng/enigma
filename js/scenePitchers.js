@@ -166,26 +166,12 @@ function addLabelToPitcher(pitcher, label) {
 }
 
 function checkGoal() {
-  if (numClicked != 2 && pitcher10.quartsMilk == 5 && pitcher7.quartsMilk == 5) {
-    isGoal = true;
-  }
-  return isGoal;
+  return (numClicked != 2 && pitcher10.quartsMilk == 5 && pitcher7.quartsMilk == 5);
 }
 
 function handleReset() {
-  console.log("we made it");
-  // reset click values
-  for (let i = 0; i < pitchers.length; i++) {
-    if (pitchers[i].isClicked) {
-      switchMesh(pitchers[i]);
-      pitchers[i].isClicked = false;
-    }
-  }
-  numClicked = 0;
-  clicked = [];
-
-  // in reset mode
   inReset = true;
+  numClicked = 2;
 }
 
 //RENDERER
@@ -214,7 +200,6 @@ let mouse = new THREE.Vector2();
 let numClicked = 0;
 let clicked = [null, null];
 let inReset = false;
-let isGoal = false;
 
 // create materials
 let materialQuart = new THREE.MeshLambertMaterial({color: 0xffffff, transparent: true, opacity: 0.5});
@@ -350,6 +335,15 @@ function render() {
       // reset complete
       if (pitcherIsFull(pitcher10)) {
         inReset = false;
+
+        for (let i = 0; i < pitchers.length; i++) {
+          if (pitchers[i].isClicked) {
+            switchMesh(pitchers[i]);
+            pitchers[i].isClicked = false;
+          }
+        }
+        numClicked = 0;
+        clicked = [];
       }
       else {
         // if there is still milk in pitcher7, return it pitcher10
@@ -385,6 +379,5 @@ function render() {
     requestAnimationFrame(render);
     if (checkGoal()) {
       $('#successModal').modal('show');
-      isGoal = false;
     }
 }
