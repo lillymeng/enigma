@@ -37,6 +37,9 @@ function switchMesh(pitcher) {
 }
 
 function handleClick(event) {
+  if (inReset)
+    return;
+
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
@@ -138,7 +141,7 @@ function pitcherIsFull(pitcher) {
   return pitcher.quartsMilk == pitcher.capacity;
 }
 
-function pitcherisEmpty(pitcher) {
+function pitcherIsEmpty(pitcher) {
   return pitcher.quartsMilk == 0;
 }
 
@@ -148,6 +151,22 @@ function addLabelToPitcher(pitcher, label) {
 
 function isGoal() {
   return (pitcher10.quartsMilk == 5 && pitcher7.quartsMilk == 5);
+}
+
+function handleReset() {
+  console.log("we made it");
+  // reset click values
+  for (let i = 0; i < pitchers.length; i++) {
+    if (pitchers[i].isClicked) {
+      switchMesh(pitchers[i]);
+      pitchers[i].isClicked = false;
+    }
+  }
+  numClicked = 0;
+  clicked = [];
+
+  // in reset mode
+  inReset = true;
 }
 
 //RENDERER
@@ -175,6 +194,7 @@ let mouse = new THREE.Vector2();
 // tracks clicked
 let numClicked = 0;
 let clicked = [null, null];
+let inReset = false;
 
 // create materials
 let materialQuart = new THREE.MeshLambertMaterial({color: 0xffffff, transparent: true, opacity: 0.5});
@@ -304,8 +324,25 @@ function render() {
       camera.updateProjectionMatrix();
     }
 
-    if (numClicked == 2) {
-      if (pitcherisEmpty(clicked[0]) || pitcherIsFull(clicked[1])) {
+    if (inReset) {
+      // reset complete
+      if (pitcherIsFull(pitcher10)) {
+        inReset = false;
+      }
+      else {
+        // if there is still milk in pitcher7, return it pitcher10
+        if (!pitcherIsEmpty(pitcher7)) {
+          pourMilk(pitcher7, pitcher10);
+        }
+
+        // if there is still milk in pitcher3, return it pitcher10
+        if (!pitcherIsEmpty(pitcher3)) {
+          pourMilk(pitcher3, pitcher10);
+        }
+      }
+    }
+    else if (numClicked == 2) {
+      if (pitcherIsEmpty(clicked[0]) || pitcherIsFull(clicked[1])) {
         numClicked = 0;
 
         switchMesh(clicked[0]);
