@@ -36,6 +36,10 @@ function switchMesh(pitcher) {
   }
 }
 
+function isTextGeometry(geometry) {
+  return geometry.type == 'TextGeometry';
+}
+
 function handleClick(event) {
   if (inReset)
     return;
@@ -48,6 +52,9 @@ function handleClick(event) {
 
   let intersects = raycaster.intersectObjects(scene.children);
   if (intersects.length > 0) {
+    if (isTextGeometry(intersects[0].object.geometry))
+      return;
+
     intersects[0].object.onClick(intersects[0].object.pitcher);
   }
 }
@@ -61,6 +68,9 @@ function handleMouseMove(event) {
 
   let intersects = raycaster.intersectObjects(scene.children);
   if (intersects.length > 0) {
+    if (isTextGeometry(intersects[0].object.geometry))
+      return;
+
     let pitcher = intersects[0].object.pitcher;
     if (!pitcher.isClicked && !pitcher.isSelected)
       switchMesh(pitcher);
