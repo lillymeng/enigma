@@ -63,7 +63,7 @@ function createWalls()
 }
 
 // Gets walls in the opposite orientation of myWalls
-function getOppositeWalls(myWalls) 
+function getOppositeWalls(myWalls)
 {
 	var newWalls = createWalls();
 
@@ -79,7 +79,7 @@ function getOppositeWalls(myWalls)
 }
 
 // adds walls at the bottom of a matrix
-function addEdgeWalls(myWalls) 
+function addEdgeWalls(myWalls)
 {
 	var newWalls = myWalls;
 
@@ -271,7 +271,7 @@ while (!set)
 	block3Index[0] = xVal;
 	block3Index[1] = yVal;
 
-	if (checkCollision(3) && xVal != block1Origin[0] && yVal != block1Origin[1] && 
+	if (checkCollision(3) && xVal != block1Origin[0] && yVal != block1Origin[1] &&
 		xVal != block2Origin[0] && yVal != block2Origin[1])
 	{
 		set = true;
@@ -574,8 +574,8 @@ function gravityCheck()
 
 		// update block positions
 		block1Pos = getPixelPosition(block1Index);
-		block2Pos = getPixelPosition(block2Index); 
-		block3Pos = getPixelPosition(block3Index); 
+		block2Pos = getPixelPosition(block2Index);
+		block3Pos = getPixelPosition(block3Index);
 
 		if (inMotion == false)
 		{
@@ -755,21 +755,31 @@ var goal2Pos = getPixelPosition(block2Goal); // pixel position of the x/blue blo
 var goal3Pos = getPixelPosition(block3Goal); // pixel position of the square/yellow block
 
 // add goal blocks to the scene
-var material1G = new THREE.MeshLambertMaterial({color: 0xa00000});
-var block1G = new THREE.Mesh(blockGeom, material1G);
-block1G.position.set(goal1Pos[0], goal1Pos[1], zPos - 10);
-scene.add(block1G);
+let loader = new THREE.TextureLoader();
+loader.load('textures/circle.jpg', function(texture)
+{
+	texture.wrapS = THREE.RepeatWrapping;
+	texture.wrapT = THREE.RepeatWrapping;
+	texture.anisotropy = 16;
 
-var material2G = new THREE.MeshLambertMaterial({color: 0x0000a0});
-var block2G = new THREE.Mesh(blockGeom, material2G);
-block2G.position.set(goal2Pos[0], goal2Pos[1], zPos - 10);
-scene.add(block2G);
+	var material1G = new THREE.MeshLambertMaterial({color: 0xa00000, map: texture});
+	var block1G = new THREE.Mesh(blockGeom, material1G);
+	block1G.position.set(goal1Pos[0], goal1Pos[1], zPos - 10);
+	scene.add(block1G);
 
-var material3G = new THREE.MeshLambertMaterial({color: 0xa0a000});
-var block3G = new THREE.Mesh(blockGeom, material3G);
-block3G.position.set(goal3Pos[0], goal3Pos[1], zPos - 10);
-scene.add(block3G);
+	var material2G = new THREE.MeshLambertMaterial({color: 0x0765fc, map: texture});
+	var block2G = new THREE.Mesh(blockGeom, material2G);
+	block2G.position.set(goal2Pos[0], goal2Pos[1], zPos - 10);
+	scene.add(block2G);
 
+	var material3G = new THREE.MeshLambertMaterial({color: 0xa0a000, map: texture});
+	var block3G = new THREE.Mesh(blockGeom, material3G);
+	block3G.position.set(goal3Pos[0], goal3Pos[1], zPos - 10);
+	scene.add(block3G);
+
+	renderer.render(scene, camera);
+}
+);
 
 orientation = 0;
 
@@ -801,8 +811,8 @@ function reset()
 	block3Index[1] = block3Origin[1];
 
 	block1Pos = getPixelPosition(block1Index);
-	block2Pos = getPixelPosition(block2Index); 
-	block3Pos = getPixelPosition(block3Index); 
+	block2Pos = getPixelPosition(block2Index);
+	block3Pos = getPixelPosition(block3Index);
 
 	block1.position.set(block1Pos[0], block1Pos[1], zPos);
 	block2.position.set(block2Pos[0], block2Pos[1], zPos);
@@ -811,10 +821,10 @@ function reset()
 	renderer.render(scene, camera);
 }
 
-function render() 
+function render()
 {
 	var rendering = false;
-	
+
 	if (rotateCounter)
 	{
     	rotateCameraCounterClock();
@@ -826,7 +836,7 @@ function render()
 		rotateCameraClock();
 		rendering = true;
 	}
-	
+
 	if (applyGrav)
 	{
 		gravityCheck();
