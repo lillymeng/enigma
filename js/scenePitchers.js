@@ -218,38 +218,40 @@ let materialMilk = new THREE.MeshLambertMaterial({color: 0xffffff});
 let materialText = new THREE.MeshLambertMaterial({color: 0x000000});
 let materialSelected = new THREE.MeshLambertMaterial({color: 0xa8e3ff, transparent: true, opacity: 0.5});
 
+let vertDiv = 7;
+
 // create 10-quart container
 let quart10 = new THREE.CylinderGeometry(40, 40, 120, 12);
 let quartMesh10 = new THREE.Mesh(quart10, materialQuart);
-quartMesh10.position.set(-(canvas.clientWidth / 6), -(canvas.clientHeight / 5), -1000);
+quartMesh10.position.set(-(canvas.clientWidth / 6), -(canvas.clientHeight / vertDiv), -1000);
 quartMesh10.onClick = handleClickPitcher;
 
 // create milk contained in 10-quart pitcher
 let milk10 = new THREE.CylinderGeometry(40, 40, 100, 12);
 let milkMesh10 = new THREE.Mesh(milk10, materialMilk);
-milkMesh10.position.set(-(canvas.clientWidth / 6), -(canvas.clientHeight / 5) - 10, -1001);
+milkMesh10.position.set(-(canvas.clientWidth / 6), -(canvas.clientHeight / vertDiv) - 10, -1001);
 
 // create 7-quart container
 let quart7 = new THREE.CylinderGeometry(40, 40, 90, 12);
 let quartMesh7 = new THREE.Mesh(quart7, materialQuart);
-quartMesh7.position.set(0, -(canvas.clientHeight / 5) - 15, -1000);
+quartMesh7.position.set(0, -(canvas.clientHeight / vertDiv) - 15, -1000);
 quartMesh7.onClick = handleClickPitcher;
 
 // create milk contained in 7-quart pitcher
 let milk7 = new THREE.CylinderGeometry(40, 40, 0, 12);
 let milkMesh7= new THREE.Mesh(milk7, materialMilk);
-milkMesh7.position.set(0, -(canvas.clientHeight / 5) - 60, -1001);
+milkMesh7.position.set(0, -(canvas.clientHeight / vertDiv) - 60, -1001);
 
 // create 3-quart container
 let quart3 = new THREE.CylinderGeometry(40, 40, 50, 12);
 let quartMesh3 = new THREE.Mesh(quart3, materialQuart);
-quartMesh3.position.set((canvas.clientWidth / 6), -(canvas.clientHeight / 5) - 35, -1000);
+quartMesh3.position.set((canvas.clientWidth / 6), -(canvas.clientHeight / vertDiv) - 35, -1000);
 quartMesh3.onClick = handleClickPitcher;
 
 // create milk contained in 3-quart pitcher
 let milk3 = new THREE.CylinderGeometry(40, 40, 0, 12);
 let milkMesh3 = new THREE.Mesh(milk3, materialMilk);
-milkMesh3.position.set((canvas.clientWidth / 6), -(canvas.clientHeight / 5) - 60, -1001);
+milkMesh3.position.set((canvas.clientWidth / 6), -(canvas.clientHeight / vertDiv) - 60, -1001);
 
 // create the three pitchers (container + milk)
 let pitcher10 = new Pitcher(quartMesh10, milkMesh10, 10, 10, false, false, null, null);
@@ -292,36 +294,36 @@ loader.load('../fonts/Montserrat_Alternates_Regular.json', function(font) {
   // level labels
   let label10 = new THREE.TextGeometry('10', {font: font, size: fontLabel, height: 1});
   let labelMesh10 = new THREE.Mesh(label10, materialText);
-  labelMesh10.position.set(-(canvas.clientWidth / 6) + horzOffsetLabel, -(canvas.clientHeight / 5) + vertOffset10, -1000);
+  labelMesh10.position.set(-(canvas.clientWidth / 6) + horzOffsetLabel, -(canvas.clientHeight / vertDiv) + vertOffset10, -1000);
   addLabelToPitcher(pitcher10, labelMesh10);
   scene.add(labelMesh10);
 
   let label7 = new THREE.TextGeometry('0', {font: font, size: fontLabel, height: 1});
   let labelMesh7 = new THREE.Mesh(label7, materialText);
-  labelMesh7.position.set(horzOffsetLabel, -(canvas.clientHeight / 5) + vertOffset7, -1000);
+  labelMesh7.position.set(horzOffsetLabel, -(canvas.clientHeight / vertDiv) + vertOffset7, -1000);
   addLabelToPitcher(pitcher7, labelMesh7);
   scene.add(labelMesh7);
 
   let label3 = new THREE.TextGeometry('0', {font: font, size: fontLabel, height: 1});
   let labelMesh3 = new THREE.Mesh(label3, materialText);
-  labelMesh3.position.set((canvas.clientWidth / 6) + horzOffsetLabel, -(canvas.clientHeight / 5) + vertOffset3, -1000);
+  labelMesh3.position.set((canvas.clientWidth / 6) + horzOffsetLabel, -(canvas.clientHeight / vertDiv) + vertOffset3, -1000);
   addLabelToPitcher(pitcher3, labelMesh3);
   scene.add(labelMesh3);
 
   // pitcher labels
   let name10 = new THREE.TextGeometry('10-quarts', {font: font, size: fontPitcher, height: 1});
   let nameMesh10 = new THREE.Mesh(name10, materialText);
-  nameMesh10.position.set(-(canvas.clientWidth / 6) + horzOffsetName - 5, -(canvas.clientHeight / 5) + vertOffsetName, -1000);
+  nameMesh10.position.set(-(canvas.clientWidth / 6) + horzOffsetName - 5, -(canvas.clientHeight / vertDiv) + vertOffsetName, -1000);
   scene.add(nameMesh10);
 
   let name7 = new THREE.TextGeometry('7-quarts', {font: font, size: fontPitcher, height: 1});
   let nameMesh7 = new THREE.Mesh(name7, materialText);
-  nameMesh7.position.set(horzOffsetName, -(canvas.clientHeight / 5) + vertOffsetName, -1000);
+  nameMesh7.position.set(horzOffsetName, -(canvas.clientHeight / vertDiv) + vertOffsetName, -1000);
   scene.add(nameMesh7);
 
   let name3 = new THREE.TextGeometry('3-quarts', {font: font, size: fontPitcher, height: 1});
   let nameMesh3 = new THREE.Mesh(name3, materialText);
-  nameMesh3.position.set((canvas.clientWidth / 6) + horzOffsetName, -(canvas.clientHeight / 5) + vertOffsetName, -1000);
+  nameMesh3.position.set((canvas.clientWidth / 6) + horzOffsetName, -(canvas.clientHeight / vertDiv) + vertOffsetName, -1000);
   scene.add(nameMesh3);
 });
 
