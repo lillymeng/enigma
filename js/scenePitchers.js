@@ -165,8 +165,11 @@ function addLabelToPitcher(pitcher, label) {
   pitcher.label = label;
 }
 
-function isGoal() {
-  return (pitcher10.quartsMilk == 5 && pitcher7.quartsMilk == 5);
+function checkGoal() {
+  if (numClicked != 2 && pitcher10.quartsMilk == 5 && pitcher7.quartsMilk == 5) {
+    isGoal = true;
+  }
+  return isGoal;
 }
 
 function handleReset() {
@@ -211,6 +214,7 @@ let mouse = new THREE.Vector2();
 let numClicked = 0;
 let clicked = [null, null];
 let inReset = false;
+let isGoal = false;
 
 // create materials
 let materialQuart = new THREE.MeshLambertMaterial({color: 0xffffff, transparent: true, opacity: 0.5});
@@ -377,4 +381,8 @@ function render() {
     renderer.clear();
     renderer.render(scene, camera);
     requestAnimationFrame(render);
+    if (checkGoal()) {
+      $('#successModal').modal('show');
+      isGoal = false;
+    }
 }
