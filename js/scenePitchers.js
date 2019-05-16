@@ -36,8 +36,13 @@ function switchMesh(pitcher) {
   }
 }
 
-function isTextGeometry(geometry) {
-  return geometry.type == 'TextGeometry';
+function findPitcher(intersects) {
+  for (let i = 0; i < intersects.length; i++) {
+    if (intersects[i].object.pitcher != undefined)
+      return intersects[i].object.pitcher;
+  }
+
+  return undefined;
 }
 
 function handleClick(event) {
@@ -52,7 +57,8 @@ function handleClick(event) {
 
   let intersects = raycaster.intersectObjects(scene.children);
   if (intersects.length > 0) {
-    if (isTextGeometry(intersects[0].object.geometry))
+    let pitcher = findPitcher(intersects);
+    if (pitcher == undefined)
       return;
 
     intersects[0].object.onClick(intersects[0].object.pitcher);
@@ -68,10 +74,10 @@ function handleMouseMove(event) {
 
   let intersects = raycaster.intersectObjects(scene.children);
   if (intersects.length > 0) {
-    if (isTextGeometry(intersects[0].object.geometry))
+    let pitcher = findPitcher(intersects);
+    if (pitcher == undefined)
       return;
 
-    let pitcher = intersects[0].object.pitcher;
     if (!pitcher.isClicked && !pitcher.isSelected)
       switchMesh(pitcher);
       pitcher.isSelected = true;
