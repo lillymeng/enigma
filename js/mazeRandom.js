@@ -809,8 +809,6 @@ function reset()
 	block3.position.set(block3Pos[0], block3Pos[1], zPos);
 
 	renderer.render(scene, camera);
-
-    document.getElementById("instructions").innerHTML = "Rotate to move the boxes to their finishing points of the same color";
 }
 
 function render() 
@@ -846,7 +844,6 @@ function render()
 	{
 		if (checkGoal())
         {
-        	document.getElementById("instructions").innerHTML = "Congrats! Your puzzle solving skills are a-maze-ing!";
         	$('#successModal').modal('show');
         }
 	}
