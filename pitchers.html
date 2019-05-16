@@ -26,14 +26,18 @@
     <link rel="stylesheet" href="styles/pitchers.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat+Alternates" rel="stylesheet">
+    <!-- Font Awesome icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 </head>
 
 <body>
-    <header style="z-index: 8">
+    <header style="position:relative">
       <a class="grow" href="puzzles.html">< back to puzzles</a>
+      <button class="btn float-right info" onclick="$('#infoModal').modal('show');" data-toggle="tooltip" data-placement="top" title="instructions"><i class="fas fa-info"></i></button>
+      <button class="btn align-middle float-right mr-3 reset" onclick="handleReset();" data-toggle="tooltip" data-placement="top" title="reset" style="font-family: 'Montserrat Alternates;'"><i class="fas fa-undo"></i></button>
     </header>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
